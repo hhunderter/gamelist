@@ -19,7 +19,7 @@ class Games extends \Ilch\Mapper
     public function getEntries($where = [])
     {
         $array = $this->db()->select('*')
-            ->from('games')
+            ->from('gamelist')
             ->where($where)
             ->order(['title' => 'ASC'])
             ->execute()
@@ -51,7 +51,7 @@ class Games extends \Ilch\Mapper
     public function getEntryById($id)
     {
         $row = $this->db()->select('*')
-            ->from('games')
+            ->from('gamelist')
             ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
@@ -83,12 +83,12 @@ class Games extends \Ilch\Mapper
         ];
 
         if ($entry->getId()) {
-            $this->db()->update('games')
+            $this->db()->update('gamelist')
                 ->values($fields)
                 ->where(['id' => $entry->getId()])
                 ->execute();
         } else {
-            $this->db()->insert('games')
+            $this->db()->insert('gamelist')
                 ->values($fields)
                 ->execute();
         }
@@ -102,18 +102,18 @@ class Games extends \Ilch\Mapper
     public function update($id)
     {
         $show = (int) $this->db()->select('show')
-            ->from('games')
+            ->from('gamelist')
             ->where(['id' => $id])
             ->execute()
             ->fetchCell();
 
         if ($show == 1) {
-            $this->db()->update('games')
+            $this->db()->update('gamelist')
                 ->values(['show' => 0])
                 ->where(['id' => $id])
                 ->execute();
         } else {
-            $this->db()->update('games')
+            $this->db()->update('gamelist')
                 ->values(['show' => 1])
                 ->where(['id' => $id])
                 ->execute();
@@ -127,11 +127,11 @@ class Games extends \Ilch\Mapper
      */
     public function delete($id)
     {
-        $this->db()->delete('games')
+        $this->db()->delete('gamelist')
             ->where(['id' => $id])
             ->execute();
 
-        $this->db()->delete('games_entrants')
+        $this->db()->delete('gamelist_entrants')
             ->where(['game_id' => $id])
             ->execute();
     }

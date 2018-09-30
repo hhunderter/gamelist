@@ -21,7 +21,7 @@ class Entrants extends \Ilch\Mapper
     public function getGameEntrants($gameId, $userId)
     {
         $entryRow = $this->db()->select('*')
-            ->from('games_entrants')
+            ->from('gamelist_entrants')
             ->where(['game_id' => $gameId, 'user_id' => $userId])
             ->execute()
             ->fetchAssoc();
@@ -46,7 +46,7 @@ class Entrants extends \Ilch\Mapper
      */
     public function getCountEntrans($gameId)
     {
-        return $this->db()->select('COUNT(*)', 'games_entrants')
+        return $this->db()->select('COUNT(*)', 'gamelist_entrants')
             ->where(['game_id' => $gameId])
             ->execute()
             ->fetchCell();
@@ -62,7 +62,7 @@ class Entrants extends \Ilch\Mapper
     public function getEntrantsByGameId($gameId)
     {
         $entryArray = $this->db()->select('*')
-            ->from('games_entrants')
+            ->from('gamelist_entrants')
             ->where(['game_id' => $gameId])
             ->execute()
             ->fetchRows();
@@ -91,7 +91,7 @@ class Entrants extends \Ilch\Mapper
     public function getEntrantsByUserId($userId)
     {
         $entryArray = $this->db()->select('*')
-            ->from('games_entrants')
+            ->from('gamelist_entrants')
             ->where(['user_id' => $userId])
             ->execute()
             ->fetchRows();
@@ -123,7 +123,7 @@ class Entrants extends \Ilch\Mapper
         ];
 
         $userId = (int) $this->db()->select('*')
-            ->from('games_entrants')
+            ->from('gamelist_entrants')
             ->where(['game_id' => $game->getGameId(), 'user_id' => $game->getUserId()])
             ->execute()
             ->fetchCell();
@@ -143,7 +143,7 @@ class Entrants extends \Ilch\Mapper
      */
     public function deleteUserFromGame($gameId, $userId)
     {
-        $this->db()->delete('games_entrants')
+        $this->db()->delete('gamelist_entrants')
             ->where(['game_id' => $gameId, 'user_id' => $userId])
             ->execute();
     }
@@ -155,7 +155,7 @@ class Entrants extends \Ilch\Mapper
      */
     public function deleteByUserId($userId)
     {
-        $this->db()->delete('games_entrants')
+        $this->db()->delete('gamelist_entrants')
             ->where(['user_id' => $userId])
             ->execute();
     }

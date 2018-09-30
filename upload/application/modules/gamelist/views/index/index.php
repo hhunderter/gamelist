@@ -9,7 +9,9 @@ $userMapper = $this->get('userMapper');
         <?php foreach ($this->get('entries') as $entry) : ?>
             <?php $entrantsUsers = $entrantsMapper->getEntrantsByGameId($entry->getId()); ?>
             <div class="game">
-                <div class="image"><img src="<?=$entry->getImage() ?>" alt="<?=$this->escape($entry->getTitle()) ?>" /></div>
+                <div class="image">
+                    <img src="<?=(substr($entry->getImage(), 0, 11) == 'application') ? $this->getBaseUrl($entry->getImage()) : $entry->getImage() ?>" alt="<?=$this->escape($entry->getTitle()) ?>" title="<?=$this->escape($entry->getTitle()) ?>" />
+                </div>
                 <div class="desc">
                     <span><?=$this->escape($entry->getTitle()) ?></span>
                     <?php if (count($entrantsUsers) > 0): ?>

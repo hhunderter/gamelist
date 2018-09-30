@@ -38,6 +38,16 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti('DROP TABLE `[prefix]_gamelist`;
             DROP TABLE `[prefix]_gamelist_entrants`;');
         $this->db()->queryMulti("DELETE FROM `[prefix]_user_menu_settings_links` WHERE `key` = 'gamelist/index/settings';");
+
+        $profileFieldId = (int) $this->db()->select('id')
+            ->from('profile_fields')
+            ->where(['name' => 'gamelist_games'])
+            ->execute()
+            ->fetchCell();
+
+        $this->db()->queryMulti("DELETE FROM `[prefix]_profile_fields` WHERE `id` = ".$profileFieldId.";
+            DELETE FROM `[prefix]_profile_content` WHERE `field_id` = ".$profileFieldId.";
+            DELETE FROM `[prefix]_profile_trans` WHERE `field_id` = ".$profileFieldId.";");
     }
 
     public function getInstallSql()
@@ -58,7 +68,13 @@ class Config extends \Ilch\Config\Install
 
             INSERT INTO `[prefix]_user_menu_settings_links` (`key`, `locale`, `description`, `name`) VALUES
                 ("gamelist/index/settings", "de_DE", "Hier kannst du deine Spielliste bearbeiten.", "Spieleauswahl"),
-                ("gamelist/index/settings", "en_EN", "Here you can manage your game list.", "Games selection");';
+                ("gamelist/index/settings", "en_EN", "Here you can manage your game list.", "Games selection");
+
+            INSERT INTO `[prefix]_profile_fields` (`name`, `type`, `show_edit`, `position`) VALUES ("gamelist_games", 0, 0, 0);
+
+            INSERT INTO `[prefix]_profile_trans` (`field_id`, `locale`, `name`) VALUES
+              (LAST_INSERT_ID(), "de_DE", "Spiele"),
+              (LAST_INSERT_ID(), "en_EN", "Games");';
 
         return $installSql;
     }

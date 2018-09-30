@@ -11,6 +11,9 @@ use Modules\Gamelist\Mappers\Entrants as EntrantsMapper;
 use Modules\Gamelist\Models\Entrants as EntrantsModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Usermenu as UserMenuMapper;
+use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
+use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
+use Modules\User\Models\ProfileFieldContent as ProfileFieldContentModel;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -39,6 +42,8 @@ class Index extends \Ilch\Controller\Frontend
         $entrantsModel = new EntrantsModel();
         $userMapper = new UserMapper();
         $UserMenuMapper = new UserMenuMapper();
+        $profileFieldsMapper = new ProfileFieldsMapper();
+        $profileFieldsContentMapper = new ProfileFieldsContentMapper();
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuPanel'))
@@ -57,6 +62,21 @@ class Index extends \Ilch\Controller\Frontend
                     ->setUserId($this->getUser()->getId());
                 $entrantsMapper->save($entrantsModel);
             }
+
+            $games = [];
+            foreach ($this->getRequest()->getPost('games') as $gameId) {
+                $game = $gamesMapper->getEntryById($gameId);
+
+                $games[] = $game->getTitle();
+            }
+            $games = implode(", ", $games);
+
+            $profileFieldId = $profileFieldsMapper->getProfileFieldIdByName('gamelist_games');
+            $profileFieldsContent = new ProfileFieldContentModel();
+            $profileFieldsContent->setFieldId($profileFieldId->getId())
+                ->setUserId($this->getUser()->getId())
+                ->setValue($games);
+            $profileFieldsContentMapper->save($profileFieldsContent);
         }
 
         $this->getView()->set('gamesEntrants', $entrantsMapper->getEntrantsByUserId($this->getUser()->getId()))

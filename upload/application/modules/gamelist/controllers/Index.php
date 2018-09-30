@@ -4,11 +4,11 @@
  * @package ilch
  */
 
-namespace Modules\Games\Controllers;
+namespace Modules\Gamelist\Controllers;
 
-use Modules\Games\Mappers\Games as GamesMapper;
-use Modules\Games\Mappers\Entrants as EntrantsMapper;
-use Modules\Games\Models\Entrants as EntrantsModel;
+use Modules\Gamelist\Mappers\Games as GamesMapper;
+use Modules\Gamelist\Mappers\Entrants as EntrantsMapper;
+use Modules\Gamelist\Models\Entrants as EntrantsModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Usermenu as UserMenuMapper;
 

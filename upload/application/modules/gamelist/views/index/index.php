@@ -5,7 +5,7 @@ $userMapper = $this->get('userMapper');
 
 <h1><?=$this->getTrans('menuGames') ?></h1>
 <?php if ($this->get('entries') != ''): ?>
-    <div class="games-list">
+    <div class="gamelist">
         <?php foreach ($this->get('entries') as $entry) : ?>
             <?php $entrantsUsers = $entrantsMapper->getEntrantsByGameId($entry->getId()); ?>
             <div class="game">

@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Modules\Games\Mappers;
+namespace Modules\Gamelist\Mappers;
 
-use Modules\Games\Models\Games as GamesModel;
+use Modules\Gamelist\Models\Games as GamesModel;
 
 class Games extends \Ilch\Mapper
 {

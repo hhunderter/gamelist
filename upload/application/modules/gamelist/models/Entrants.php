@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Modules\Games\Models;
+namespace Modules\Gamelist\Models;
 
 class Entrants extends \Ilch\Model
 {

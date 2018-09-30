@@ -4,10 +4,10 @@
  * @package ilch
  */
 
-namespace Modules\Games\Controllers\Admin;
+namespace Modules\Gamelist\Controllers\Admin;
 
-use Modules\Games\Mappers\Games as GamesMapper;
-use Modules\Games\Models\Games as GamesModel;
+use Modules\Gamelist\Mappers\Games as GamesMapper;
+use Modules\Gamelist\Models\Games as GamesModel;
 use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin

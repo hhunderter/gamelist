@@ -4,12 +4,12 @@
  * @package ilch
  */
 
-namespace Modules\Games\Config;
+namespace Modules\Gamelist\Config;
 
 class Config extends \Ilch\Config\Install
 {
     public $config = [
-        'key' => 'games',
+        'key' => 'gamelist',
         'version' => '1.0',
         'icon_small' => 'fa-gamepad',
         'author' => 'Veldscholten, Kevin',
@@ -35,15 +35,15 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_games`;
-            DROP TABLE `[prefix]_games_entrants`;');
-        $this->db()->queryMulti("DELETE FROM `[prefix]_user_menu_settings_links` WHERE `key` = 'games/index/settings';");
+        $this->db()->queryMulti('DROP TABLE `[prefix]_gamelist`;
+            DROP TABLE `[prefix]_gamelist_entrants`;');
+        $this->db()->queryMulti("DELETE FROM `[prefix]_user_menu_settings_links` WHERE `key` = 'gamelist/index/settings';");
     }
 
     public function getInstallSql()
     {
         $installSql =
-            'CREATE TABLE IF NOT EXISTS `[prefix]_games` (
+            'CREATE TABLE IF NOT EXISTS `[prefix]_gamelist` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `title` VARCHAR(100) NOT NULL,
                 `image` VARCHAR(255) NULL DEFAULT NULL,
@@ -51,14 +51,14 @@ class Config extends \Ilch\Config\Install
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
-            CREATE TABLE IF NOT EXISTS `[prefix]_games_entrants` (
+            CREATE TABLE IF NOT EXISTS `[prefix]_gamelist_entrants` (
                 `game_id` INT(11) NOT NULL,
                 `user_id` INT(11) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             INSERT INTO `[prefix]_user_menu_settings_links` (`key`, `locale`, `description`, `name`) VALUES
-                ("games/index/settings", "de_DE", "Hier kannst du deine Spielliste bearbeiten.", "Spieleauswahl"),
-                ("games/index/settings", "en_EN", "Here you can manage your game list.", "Games selection");';
+                ("gamelist/index/settings", "de_DE", "Hier kannst du deine Spielliste bearbeiten.", "Spieleauswahl"),
+                ("gamelist/index/settings", "en_EN", "Here you can manage your game list.", "Games selection");';
 
         return $installSql;
     }

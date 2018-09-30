@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Modules\Games\Mappers;
+namespace Modules\Gamelist\Mappers;
 
-use Modules\Games\Models\Entrants as EntrantsModel;
+use Modules\Gamelist\Models\Entrants as EntrantsModel;
 
 class Entrants extends \Ilch\Mapper
 {

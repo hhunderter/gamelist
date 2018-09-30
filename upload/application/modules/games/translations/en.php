@@ -8,4 +8,5 @@ return [
     'menuGames' => 'Game list',
     'noEntries' => 'No Entries available',
     'image' => 'Image',
+    'members' => 'Members',
 ];

@@ -37,7 +37,7 @@ class Config extends \Ilch\Config\Install
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_games`;
             DROP TABLE `[prefix]_games_entrants`;');
-        $this->db()->queryMulti("DELETE FROM `[prefix]_modules_folderrights` WHERE `key` = 'games';");
+        $this->db()->queryMulti("DELETE FROM `[prefix]_user_menu_settings_links` WHERE `key` = 'games/index/settings';");
     }
 
     public function getInstallSql()
@@ -47,7 +47,7 @@ class Config extends \Ilch\Config\Install
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `title` VARCHAR(100) NOT NULL,
                 `image` VARCHAR(255) NULL DEFAULT NULL,
-                `show` TINYINT(1) NOT NULL DEFAULT 0,
+                `show` TINYINT(1) NOT NULL DEFAULT 1,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -56,7 +56,9 @@ class Config extends \Ilch\Config\Install
                 `user_id` INT(11) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-            INSERT INTO `[prefix]_modules_folderrights` (`key`, `folder`) VALUES ("games", "static/upload/image");';
+            INSERT INTO `[prefix]_user_menu_settings_links` (`key`, `locale`, `description`, `name`) VALUES
+                ("games/index/settings", "de_DE", "Hier kannst du deine Spielliste bearbeiten.", "Spieleauswahl"),
+                ("games/index/settings", "en_EN", "Here you can manage your game list.", "Games selection");';
 
         return $installSql;
     }

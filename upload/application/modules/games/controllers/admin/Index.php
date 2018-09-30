@@ -17,7 +17,7 @@ class Index extends \Ilch\Controller\Admin
         $items = [
             [
                 'name' => 'manage',
-                'active' => true,
+                'active' => false,
                 'icon' => 'fa fa-th-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
                 [
@@ -88,8 +88,7 @@ class Index extends \Ilch\Controller\Admin
 
             $post = [
                 'title' => $this->getRequest()->getPost('title'),
-                'image' => $image,
-                'show' => $this->getRequest()->getPost('show')
+                'image' => $image
             ];
 
             $validation = Validation::create($post, [
@@ -105,8 +104,7 @@ class Index extends \Ilch\Controller\Admin
                     $model->setId($this->getRequest()->getParam('id'));
                 }
                 $model->setTitle($post['title'])
-                    ->setImage($post['image'])
-                    ->setShow($post['show']);
+                    ->setImage($post['image']);
                 $gamesMapper->save($model);
 
                 $this->redirect()
@@ -120,6 +118,18 @@ class Index extends \Ilch\Controller\Admin
                 ->withErrors($validation->getErrorBag())
                 ->to(['action' => 'treat']);
         }
+    }
+
+    public function updateAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $gamesMapper = new GamesMapper();
+            $gamesMapper->update($this->getRequest()->getParam('id'));
+
+            $this->addMessage('saveSuccess');
+        }
+
+        $this->redirect(['action' => 'index']);
     }
 
     public function delAction()

@@ -21,7 +21,7 @@ class Games extends \Ilch\Mapper
         $array = $this->db()->select('*')
             ->from('games')
             ->where($where)
-            ->order(['title' => 'DESC'])
+            ->order(['title' => 'ASC'])
             ->execute()
             ->fetchRows();
 
@@ -95,6 +95,32 @@ class Games extends \Ilch\Mapper
     }
 
     /**
+     * Updates entry with given id.
+     *
+     * @param integer $id
+     */
+    public function update($id)
+    {
+        $show = (int) $this->db()->select('show')
+            ->from('games')
+            ->where(['id' => $id])
+            ->execute()
+            ->fetchCell();
+
+        if ($show == 1) {
+            $this->db()->update('games')
+                ->values(['show' => 0])
+                ->where(['id' => $id])
+                ->execute();
+        } else {
+            $this->db()->update('games')
+                ->values(['show' => 1])
+                ->where(['id' => $id])
+                ->execute();
+        }
+    }
+
+    /**
      * Deletes entry with given id.
      *
      * @param integer $id
@@ -103,6 +129,10 @@ class Games extends \Ilch\Mapper
     {
         $this->db()->delete('games')
             ->where(['id' => $id])
+            ->execute();
+
+        $this->db()->delete('games_entrants')
+            ->where(['game_id' => $id])
             ->execute();
     }
 }

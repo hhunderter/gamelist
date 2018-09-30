@@ -129,7 +129,7 @@ class Entrants extends \Ilch\Mapper
             ->fetchCell();
 
         if (!$userId) {
-            $this->db()->insert('games_entrants')
+            $this->db()->insert('gamelist_entrants')
                 ->values($fields)
                 ->execute();
         }

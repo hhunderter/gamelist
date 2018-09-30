@@ -49,7 +49,7 @@ class Index extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuSettings'), ['module' => 'user', 'controller' => 'panel', 'action' => 'settings'])
             ->add($this->getTranslator()->trans('gamesSelection'), ['controller' => 'index', 'action' => 'settings']);
 
-        if ($this->getRequest()->getPost('save')) {
+        if ($this->getRequest()->getPost('saveGames')) {
             $entrantsMapper->deleteByUserId($this->getUser()->getId());
 
             foreach ($this->getRequest()->getPost('games') as $gameId) {

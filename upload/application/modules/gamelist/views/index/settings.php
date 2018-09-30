@@ -39,7 +39,7 @@
                 <div class="row">
                     <div class="col-lg-offset-3 col-lg-9">
                         <input type="submit"
-                               name="save"
+                               name="saveGames"
                                class="btn"
                                value="<?=$this->getTrans('submit') ?>" />
                     </div>

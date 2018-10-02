@@ -45,6 +45,8 @@ class Index extends \Ilch\Controller\Frontend
         $profileFieldsMapper = new ProfileFieldsMapper();
         $profileFieldsContentMapper = new ProfileFieldsContentMapper();
 
+        $profileField = $profileFieldsMapper->getProfileFieldIdByKey('gamelist_games');
+
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuPanel'))
             ->add($this->getTranslator()->trans('menuSettings'))
@@ -71,7 +73,6 @@ class Index extends \Ilch\Controller\Frontend
             }
             $games = implode(", ", $games);
 
-            $profileField = $profileFieldsMapper->getProfileFieldIdByKey('gamelist_games');
             $profileFieldsContent = new ProfileFieldContentModel();
             $profileFieldsContent->setFieldId($profileField->getId())
                 ->setUserId($this->getUser()->getId())
@@ -82,6 +83,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('gamesEntrants', $entrantsMapper->getEntrantsByUserId($this->getUser()->getId()))
             ->set('entries', $gamesMapper->getEntries(['show' => 1]))
             ->set('usermenu', $UserMenuMapper->getUserMenu())
+            ->set('profileField', $profileField)
             ->set('profil', $userMapper->getUserById($this->getUser()->getId()))
             ->set('galleryAllowed', $this->getConfig()->get('usergallery_allowed'));
     }

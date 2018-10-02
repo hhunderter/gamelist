@@ -16,6 +16,9 @@
                         <?=$this->getTrans('games') ?>
                     </label>
                     <div class="col-lg-9">
+                        <?php if ($this->get('profileField')->getShow() == 0): ?>
+                            <div class="input-group">
+                        <?php endif; ?>
                         <select class="chosen-select form-control"
                                 id="assignedGames"
                                 name="games[]"
@@ -33,6 +36,12 @@
                                 </option>
                             <?php endforeach; ?>
                         </select>
+                        <?php if ($this->get('profileField')->getShow() == 0): ?>
+                            <span class="input-group-addon" data-toggle="tooltip" data-placement="bottom" title="<?=$this->getTrans('profileFieldHidden') ?>">
+                                <span class="fa fa-eye-slash"></span>
+                            </span>
+                            </div>
+                    <?php endif; ?>
                     </div>
                 </div>
 
@@ -52,4 +61,5 @@
 <script src="<?=$this->getStaticUrl('js/chosen/chosen.jquery.min.js') ?>"></script>
 <script>
     $('#assignedGames').chosen();
+    $('[data-toggle="tooltip"]').tooltip()
 </script>

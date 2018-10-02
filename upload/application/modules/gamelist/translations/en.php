@@ -12,6 +12,7 @@ return [
     'members' => 'Members',
     'games' => 'Games',
     'selectGames' => 'Select games',
+    'profileFieldHidden' => 'Field hidden by the administrator.',
 
     'menuPanel' => 'User Panel',
     'menuSettings' => 'Settings',

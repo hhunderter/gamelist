@@ -12,6 +12,7 @@ return [
     'members' => 'Mitglieder',
     'games' => 'Spiele',
     'selectGames' => 'Spiele wählen',
+    'profileFieldHidden' => 'Feld vom Administrator ausgeblendet.',
 
     'menuPanel' => 'User Panel',
     'menuSettings' => 'Einstellungen',

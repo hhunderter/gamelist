@@ -71,9 +71,9 @@ class Index extends \Ilch\Controller\Frontend
             }
             $games = implode(", ", $games);
 
-            $profileFieldId = $profileFieldsMapper->getProfileFieldIdByName('gamelist_games');
+            $profileField = $profileFieldsMapper->getProfileFieldIdByKey('gamelist_games');
             $profileFieldsContent = new ProfileFieldContentModel();
-            $profileFieldsContent->setFieldId($profileFieldId->getId())
+            $profileFieldsContent->setFieldId($profileField->getId())
                 ->setUserId($this->getUser()->getId())
                 ->setValue($games);
             $profileFieldsContentMapper->save($profileFieldsContent);

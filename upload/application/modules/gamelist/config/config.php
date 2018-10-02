@@ -41,7 +41,7 @@ class Config extends \Ilch\Config\Install
 
         $profileFieldId = (int) $this->db()->select('id')
             ->from('profile_fields')
-            ->where(['name' => 'gamelist_games'])
+            ->where(['key' => 'gamelist_games'])
             ->execute()
             ->fetchCell();
 
@@ -70,7 +70,7 @@ class Config extends \Ilch\Config\Install
                 ("gamelist/index/settings", "de_DE", "Hier kannst du deine Spielliste bearbeiten.", "Spieleauswahl"),
                 ("gamelist/index/settings", "en_EN", "Here you can manage your game list.", "Games selection");
 
-            INSERT INTO `[prefix]_profile_fields` (`name`, `type`, `show_edit`, `position`) VALUES ("gamelist_games", 0, 0, 0);
+            INSERT INTO `[prefix]_profile_fields` (`key`, `type`, `show`, `hidden`, `position`) VALUES ("gamelist_games", 0, 1, 1, 0);
 
             INSERT INTO `[prefix]_profile_trans` (`field_id`, `locale`, `name`) VALUES
               (LAST_INSERT_ID(), "de_DE", "Spiele"),

@@ -8,6 +8,7 @@
 
         <div class="profile-content active">
             <h1><?=$this->getTrans('gamesSelection') ?></h1>
+            <?php if (!empty($this->get('entries'))) : ?>
             <form class="form-horizontal" method="POST" action="">
                 <?=$this->getTokenField() ?>
 
@@ -54,6 +55,9 @@
                     </div>
                 </div>
             </form>
+            <?php else : ?>
+                <?=$this->getTrans('noEntries') ?>
+            <?php endif; ?>
         </div>
     </div>
 </div>

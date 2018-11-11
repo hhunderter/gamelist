@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'gamelist',
-        'version' => '1.0.0',
+        'version' => '1.1.0',
         'icon_small' => 'fa-gamepad',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage the game list.',
             ],
         ],
-        'ilchCore' => '2.1.15',
+        'ilchCore' => '2.1.16',
         'phpVersion' => '5.6'
     ];
 

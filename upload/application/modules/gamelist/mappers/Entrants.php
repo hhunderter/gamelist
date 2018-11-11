@@ -68,7 +68,7 @@ class Entrants extends \Ilch\Mapper
             ->fetchRows();
 
         if (empty($entryArray)) {
-            return null;
+            return [];
         }
 
         $entry = [];
@@ -97,7 +97,7 @@ class Entrants extends \Ilch\Mapper
             ->fetchRows();
 
         if (empty($entryArray)) {
-            return null;
+            return [];
         }
 
         $entry = [];

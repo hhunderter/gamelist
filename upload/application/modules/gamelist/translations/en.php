@@ -7,7 +7,7 @@
 return [
     'menuGames' => 'Game list',
     'gamesSelection' => 'Games selection',
-    'noEntries' => 'No Entries available',
+    'noEntries' => 'No entries available',
     'image' => 'Image',
     'members' => 'Members',
     'games' => 'Games',

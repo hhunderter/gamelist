@@ -26,7 +26,7 @@ class Games extends \Ilch\Mapper
             ->fetchRows();
 
         if (empty($array)) {
-            return null;
+            return [];
         }
 
         $entries = [];

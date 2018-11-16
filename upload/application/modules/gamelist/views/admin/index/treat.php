@@ -13,6 +13,18 @@
                    value="<?=($this->get('entry') != '') ? $this->escape($this->get('entry')->getTitle()) : $this->originalInput('title') ?>">
         </div>
     </div>
+    <div class="form-group">
+        <label for="title" class="col-lg-2 control-label">
+            <?=$this->getTrans('videourl') ?>:
+        </label>
+        <div class="col-lg-3">
+            <input type="text"
+                   class="form-control"
+                   name="videourl"
+                   id="videourl"
+                   value="<?=($this->get('entry') != '') ? $this->escape($this->get('entry')->getVideourl()) : $this->originalInput('videourl') ?>">
+        </div>
+    </div>
     <div class="form-group <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
         <label for="selectedImage" class="col-lg-2 control-label">
             <?=$this->getTrans('image') ?>:

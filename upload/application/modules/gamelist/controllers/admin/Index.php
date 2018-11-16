@@ -88,8 +88,11 @@ class Index extends \Ilch\Controller\Admin
 
             $post = [
                 'title' => $this->getRequest()->getPost('title'),
+                'videourl' => $this->getRequest()->getPost('videourl'),
                 'image' => $image
             ];
+
+            $newvideoUrl = str_replace("https://www.youtube.com/watch?v=","", $post['videourl']);
 
             $validation = Validation::create($post, [
                 'title'  => 'required',
@@ -104,7 +107,8 @@ class Index extends \Ilch\Controller\Admin
                     $model->setId($this->getRequest()->getParam('id'));
                 }
                 $model->setTitle($post['title'])
-                    ->setImage($post['image']);
+                      ->setVideourl($newvideoUrl)
+                      ->setImage($post['image']);
                 $gamesMapper->save($model);
 
                 $this->redirect()

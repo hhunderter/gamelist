@@ -11,6 +11,7 @@ return [
     'image' => 'Bild',
     'members' => 'Mitglieder',
     'games' => 'Spiele',
+    'videourl' => 'Youtube URL',
     'selectGames' => 'Spiele wählen',
     'profileFieldHidden' => 'Feld vom Administrator ausgeblendet.',
 

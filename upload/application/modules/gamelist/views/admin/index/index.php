@@ -18,6 +18,7 @@
                         <th></th>
                         <th></th>
                         <th><?=$this->getTrans('title') ?></th>
+                        <th><?=$this->getTrans('videourl') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,6 +39,7 @@
                                 <?php endif; ?>
                             </td>
                             <td><?=$this->escape($entry->getTitle()) ?></td>
+                            <td><?=$this->escape($entry->getVideourl()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

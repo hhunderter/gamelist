@@ -10,7 +10,27 @@ $userMapper = $this->get('userMapper');
             <?php $entrantsUsers = $entrantsMapper->getEntrantsByGameId($entry->getId()); ?>
             <div class="game">
                 <div class="image">
-                    <img src="<?=(substr($entry->getImage(), 0, 11) == 'application') ? $this->getBaseUrl($entry->getImage()) : $entry->getImage() ?>" alt="<?=$this->escape($entry->getTitle()) ?>" title="<?=$this->escape($entry->getTitle()) ?>" />
+                    <?php if (!$entry->getVideourl()):?>
+                        <img src="<?=(substr($entry->getImage(), 0, 11) == 'application') ? $this->getBaseUrl($entry->getImage()) : $entry->getImage() ?>" alt="<?=$this->escape($entry->getTitle()) ?>" title="<?=$this->escape($entry->getTitle()) ?>" />
+                    <?php else: ?>
+                        <a href="#" data-toggle="modal" data-target="#videoModal_<?=$entry->getId() ?>">
+                            <img src="<?=(substr($entry->getImage(), 0, 11) == 'application') ? $this->getBaseUrl($entry->getImage()) : $entry->getImage() ?>" alt="<?=$this->escape($entry->getTitle()) ?>" title="<?=$this->escape($entry->getTitle()) ?>" />
+                        </a>
+                        <!-- Video Modal -->
+                        <div id="videoModal_<?=$entry->getId() ?>" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title"><?=$this->escape($entry->getTitle()) ?></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <iframe width="100%" height="250px" src="https://www.youtube.com/embed/<?=$entry->getVideourl() ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="desc">
                     <span><?=$this->escape($entry->getTitle()) ?></span>

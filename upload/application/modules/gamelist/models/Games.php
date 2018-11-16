@@ -23,6 +23,13 @@ class Games extends \Ilch\Model
     protected $title;
 
     /**
+     * The Videourl.
+     *
+     * @var string
+     */
+    protected $videourl;
+
+    /**
      * The image.
      *
      * @var string
@@ -67,6 +74,29 @@ class Games extends \Ilch\Model
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Sets the videourl.
+     *
+     * @param string $videourl
+     * @return $this
+     */
+    public function setVideourl($videourl)
+    {
+        $this->videourl = (string)$videourl;
+
+        return $this;
+    }
+
+    /**
+     * Gets the videourl.
+     *
+     * @return string
+     */
+    public function getVideourl()
+    {
+        return $this->videourl;
     }
 
     /**

@@ -56,6 +56,7 @@ class Config extends \Ilch\Config\Install
             'CREATE TABLE IF NOT EXISTS `[prefix]_gamelist` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `title` VARCHAR(100) NOT NULL,
+                `videourl` VARCHAR(100) NOT NULL,
                 `image` VARCHAR(255) NULL DEFAULT NULL,
                 `show` TINYINT(1) NOT NULL DEFAULT 1,
                 PRIMARY KEY (`id`)

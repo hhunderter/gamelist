@@ -34,6 +34,7 @@ class Games extends \Ilch\Mapper
             $model = new GamesModel();
             $model->setId($entry['id'])
                 ->setTitle($entry['title'])
+                ->setVideourl($entry['videourl'])
                 ->setImage($entry['image'])
                 ->setShow($entry['show']);
             $entries[] = $model;
@@ -63,6 +64,7 @@ class Games extends \Ilch\Mapper
         $model = new GamesModel();
         $model->setId($row['id'])
             ->setTitle($row['title'])
+            ->setVideourl($row['videourl'])
             ->setImage($row['image'])
             ->setShow($row['show']);
 
@@ -78,6 +80,7 @@ class Games extends \Ilch\Mapper
     {
         $fields = [
             'title' => $entry->getTitle(),
+            'videourl' => $entry->getVideourl(),
             'image' => $entry->getImage(),
             'show' => $entry->getShow()
         ];

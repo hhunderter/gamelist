@@ -25,7 +25,7 @@ $userMapper = $this->get('userMapper');
                                         <h4 class="modal-title"><?=$this->escape($entry->getTitle()) ?></h4>
                                     </div>
                                     <div class="modal-body">
-                                        <iframe width="100%" height="250px" src="https://www.youtube.com/embed/<?=$entry->getVideourl() ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        <iframe width="100%" height="250px" src="https://www.youtube-nocookie.com/embed/<?=$entry->getVideourl() ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                     </div>
                                 </div>
                             </div>

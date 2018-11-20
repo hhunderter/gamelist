@@ -14,6 +14,9 @@ return [
     'videourl' => 'Youtube URL',
     'selectGames' => 'Spiele wählen',
     'profileFieldHidden' => 'Feld vom Administrator ausgeblendet.',
+    'menuCats' => 'Kategorien',
+    'cat' => 'Kategorie',
+    'noCategory' => 'Keine Kategorien vorhanden',
 
     'menuPanel' => 'User Panel',
     'menuSettings' => 'Einstellungen',

@@ -7,6 +7,7 @@
 namespace Modules\Gamelist\Controllers;
 
 use Modules\Gamelist\Mappers\Games as GamesMapper;
+use Modules\Gamelist\Mappers\Category as CategoryMapper;
 use Modules\Gamelist\Mappers\Entrants as EntrantsMapper;
 use Modules\Gamelist\Models\Entrants as EntrantsModel;
 use Modules\User\Mappers\User as UserMapper;
@@ -22,17 +23,52 @@ class Index extends \Ilch\Controller\Frontend
         $gamesMapper = new GamesMapper();
         $entrantsMapper = new EntrantsMapper();
         $userMapper = new UserMapper;
+        $categoryMapper = new CategoryMapper;
 
-        $this->getLayout()->header()
-            ->css('static/css/gamelist.css');
-        $this->getLayout()->getTitle()
-            ->add($this->getTranslator()->trans('menuGames'));
-        $this->getLayout()->getHmenu()
-            ->add($this->getTranslator()->trans('menuGames'), ['action' => 'index']);
+        $this->getLayout()->header()->css('static/css/gamelist.css');
+        $this->getLayout()->getTitle()->add($this->getTranslator()->trans('menuGames'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuGames'), ['action' => 'index']);
+
+
+        if ($this->getRequest()->getParam('catid')) {
+            $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('catid'));
+
+            if (!$category) {
+                $this->redirect(['action' => 'index']);
+            }
+
+            $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuGames'), ['action' => 'index'])
+                ->add($category->getTitle(), ['action' => 'index', 'catid' => $category->getId()]);
+
+            $games = $gamesMapper->getEntries(['catid' => $this->getRequest()->getParam('catid')]);
+        } else {
+            $catId = $categoryMapper->getCategoryMinId();
+
+            if ($catId != '') {
+                $category = $categoryMapper->getCategoryById($catId->getId());
+
+                $this->getLayout()->getHmenu()
+                    ->add($this->getTranslator()->trans('menuGames'), ['action' => 'index'])
+                    ->add($category->getTitle(), ['action' => 'index', 'catid' => $category->getId()]);
+
+                $games = $gamesMapper->getEntries(['catid' => $catId->getId()]);
+
+                $this->getView()->set('firstCatId', $catId->getId());
+            } else {
+                $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuGames'), ['action' => 'index']);
+
+                $games = $gamesMapper->getEntries();
+            }
+        }
 
         $this->getView()->set('entrantsMapper', $entrantsMapper)
             ->set('userMapper', $userMapper)
+            ->set('gameMapper', $gamesMapper)
+            ->set('games', $games)
+            ->set('categorys', $categoryMapper->getCategories())
             ->set('entries', $gamesMapper->getEntries(['show' => 1]));
+
     }
 
     public function settingsAction()

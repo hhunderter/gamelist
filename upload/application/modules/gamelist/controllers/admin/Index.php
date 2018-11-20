@@ -8,6 +8,7 @@ namespace Modules\Gamelist\Controllers\Admin;
 
 use Modules\Gamelist\Mappers\Games as GamesMapper;
 use Modules\Gamelist\Models\Games as GamesModel;
+use Modules\Gamelist\Mappers\Category as CategoryMapper;
 use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
@@ -26,6 +27,12 @@ class Index extends \Ilch\Controller\Admin
                     'icon' => 'fa fa-plus-circle',
                     'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
                 ]
+            ],
+            [
+                'name' => 'menuCats',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
             ]
         ];
 
@@ -45,6 +52,7 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $gamesMapper = new GamesMapper();
+        $categoryMapper = new CategoryMapper();
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuGames'), ['action' => 'index'])
@@ -58,12 +66,14 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
+        $this->getView()->set('categoryMapper', $categoryMapper);
         $this->getView()->set('entries', $gamesMapper->getEntries());
     }
 
     public function treatAction()
     {
         $gamesMapper = new GamesMapper();
+        $categoryMapper = new CategoryMapper();
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
@@ -87,6 +97,7 @@ class Index extends \Ilch\Controller\Admin
             }
 
             $post = [
+                'catid' => $this->getRequest()->getPost('catid'),
                 'title' => $this->getRequest()->getPost('title'),
                 'videourl' => $this->getRequest()->getPost('videourl'),
                 'image' => $image
@@ -107,6 +118,7 @@ class Index extends \Ilch\Controller\Admin
                     $model->setId($this->getRequest()->getParam('id'));
                 }
                 $model->setTitle($post['title'])
+                      ->setCatId($post['catid'])
                       ->setVideourl($newvideoUrl)
                       ->setImage($post['image']);
                 $gamesMapper->save($model);
@@ -122,6 +134,7 @@ class Index extends \Ilch\Controller\Admin
                 ->withErrors($validation->getErrorBag())
                 ->to(['action' => 'treat']);
         }
+        $this->getView()->set('cats', $categoryMapper->getCategories());
     }
 
     public function updateAction()

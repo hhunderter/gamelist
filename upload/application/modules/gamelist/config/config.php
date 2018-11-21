@@ -56,7 +56,7 @@ class Config extends \Ilch\Config\Install
         $installSql =
             'CREATE TABLE IF NOT EXISTS `[prefix]_gamelist` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `cat_id` INT(11) NOT NULL,
+                `catid` INT(11) NOT NULL,
                 `title` VARCHAR(100) NOT NULL,
                 `videourl` VARCHAR(100) NOT NULL,
                 `image` VARCHAR(255) NULL DEFAULT NULL,

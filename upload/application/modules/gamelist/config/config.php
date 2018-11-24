@@ -36,7 +36,8 @@ class Config extends \Ilch\Config\Install
     public function uninstall()
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_gamelist`;
-            DROP TABLE `[prefix]_gamelist_entrants`;');
+                                      DROP TABLE `[prefix]_gamelist_cats`;
+                                      DROP TABLE `[prefix]_gamelist_entrants`;');
         $this->db()->queryMulti("DELETE FROM `[prefix]_user_menu_settings_links` WHERE `key` = 'gamelist/index/settings';");
 
         $profileFieldId = (int) $this->db()->select('id')
@@ -55,6 +56,7 @@ class Config extends \Ilch\Config\Install
         $installSql =
             'CREATE TABLE IF NOT EXISTS `[prefix]_gamelist` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
+                `catid` INT(11) NOT NULL,
                 `title` VARCHAR(100) NOT NULL,
                 `videourl` VARCHAR(100) NOT NULL,
                 `image` VARCHAR(255) NULL DEFAULT NULL,
@@ -66,6 +68,12 @@ class Config extends \Ilch\Config\Install
                 `game_id` INT(11) NOT NULL,
                 `user_id` INT(11) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            
+            CREATE TABLE IF NOT EXISTS `[prefix]_gamelist_cats` (
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `title` VARCHAR(100) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             INSERT INTO `[prefix]_user_menu_settings_links` (`key`, `locale`, `description`, `name`) VALUES
                 ("gamelist/index/settings", "de_DE", "Hier kannst du deine Spielliste bearbeiten.", "Spieleauswahl"),

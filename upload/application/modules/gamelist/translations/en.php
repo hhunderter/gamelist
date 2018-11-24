@@ -14,6 +14,9 @@ return [
     'videourl' => 'Youtube URL',
     'selectGames' => 'Select games',
     'profileFieldHidden' => 'Field hidden by the administrator.',
+    'menuCats' => 'Categories',
+    'cat' => 'Category',
+    'noCategory' => 'No Category available',
 
     'menuPanel' => 'User Panel',
     'menuSettings' => 'Settings',

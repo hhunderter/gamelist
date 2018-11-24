@@ -16,6 +16,13 @@ class Games extends \Ilch\Model
     protected $id;
 
     /**
+     * The catid.
+     *
+     * @var int
+     */
+    protected $catid;
+
+    /**
      * The title.
      *
      * @var string
@@ -62,6 +69,29 @@ class Games extends \Ilch\Model
     public function setId($id)
     {
         $this->id = (int)$id;
+
+        return $this;
+    }
+
+    /**
+     * Gets the catid.
+     *
+     * @return int
+     */
+    public function getCatId()
+    {
+        return $this->catid;
+    }
+
+    /**
+     * Sets the catid.
+     *
+     * @param int $catid
+     * @return $this
+     */
+    public function setCatId($catid)
+    {
+        $this->catid = (int)$catid;
 
         return $this;
     }

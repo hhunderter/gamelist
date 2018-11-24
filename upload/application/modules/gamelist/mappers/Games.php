@@ -33,6 +33,7 @@ class Games extends \Ilch\Mapper
         foreach ($array as $entry) {
             $model = new GamesModel();
             $model->setId($entry['id'])
+                ->setCatId($entry['catid'])
                 ->setTitle($entry['title'])
                 ->setVideourl($entry['videourl'])
                 ->setImage($entry['image'])
@@ -63,6 +64,7 @@ class Games extends \Ilch\Mapper
 
         $model = new GamesModel();
         $model->setId($row['id'])
+            ->setCatId($row['catid'])
             ->setTitle($row['title'])
             ->setVideourl($row['videourl'])
             ->setImage($row['image'])
@@ -79,6 +81,7 @@ class Games extends \Ilch\Mapper
     public function save(GamesModel $entry)
     {
         $fields = [
+            'catid' => $entry->getCatId(),
             'title' => $entry->getTitle(),
             'videourl' => $entry->getVideourl(),
             'image' => $entry->getImage(),

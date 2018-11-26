@@ -1,5 +1,5 @@
 <link href="<?=$this->getStaticUrl('css/chosen/bootstrap-chosen.css') ?>" rel="stylesheet">
-<link href="<?=$this->getStaticUrl('css/chosen/chosen.css') ?>" rel="stylesheet">
+<link href="<?=$this->getVendorUrl('harvesthq/chosen/chosen.min.css') ?>" rel="stylesheet">
 <link href="<?=$this->getModuleUrl('../user/static/css/user.css') ?>" rel="stylesheet">
 
 <div class="row">
@@ -62,7 +62,7 @@
     </div>
 </div>
 
-<script src="<?=$this->getStaticUrl('js/chosen/chosen.jquery.min.js') ?>"></script>
+<script src="<?=$this->getVendorUrl('harvesthq/chosen/chosen.jquery.min.js') ?>"></script>
 <script>
     $('#assignedGames').chosen();
     $('[data-toggle="tooltip"]').tooltip()

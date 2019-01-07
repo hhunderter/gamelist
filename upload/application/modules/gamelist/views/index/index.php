@@ -5,7 +5,6 @@ $entrantsMapper = $this->get('entrantsMapper');
 $gameMapper = $this->get('gameMapper');
 $userMapper = $this->get('userMapper');
 ?>
-
 <h1><?=$this->getTrans('menuGames') ?></h1>
 <?php if (!empty($games)): ?>
     <nav class="navbar navbar-default">
@@ -110,3 +109,10 @@ $userMapper = $this->get('userMapper');
         <li class="list-group-item"><?=$this->getTrans('noEntries') ?></li>
     </ul>
 <?php endif; ?>
+
+<script>
+    $(".modal").on('hidden.bs.modal', function (e) {
+        $(".modal iframe").attr("src", $(".modal iframe").attr("src"));
+    });
+</script>
+

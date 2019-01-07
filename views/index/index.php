@@ -67,11 +67,6 @@ $userMapper = $this->get('userMapper');
                                 </div>
                             </div>
                         </div>
-                        <script>
-                            $(".modal").on('hidden.bs.modal', function (e) {
-                                $(".modal iframe").attr("src", $(".modal iframe").attr("src"));
-                            });
-                        </script>
                     <?php endif; ?>
                 </div>
                 <div class="desc text-center">
@@ -114,4 +109,10 @@ $userMapper = $this->get('userMapper');
         <li class="list-group-item"><?=$this->getTrans('noEntries') ?></li>
     </ul>
 <?php endif; ?>
+
+<script>
+    $(".modal").on('hidden.bs.modal', function (e) {
+        $(".modal iframe").attr("src", $(".modal iframe").attr("src"));
+    });
+</script>
 

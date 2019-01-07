@@ -58,20 +58,15 @@ $userMapper = $this->get('userMapper');
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <button id="myStopClickButton" type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         <h4 class="modal-title"><?=$this->escape($game->getTitle()) ?></h4>
                                     </div>
-                                    <div class="modal-body" id="youtube_player">
-                                        <iframe width="100%" class="yt_player_iframe"  height="250px" src="https://www.youtube-nocookie.com/embed/<?=$game->getVideourl() ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <div class="modal-body">
+                                        <iframe width="100%" height="250px" src="https://www.youtube-nocookie.com/embed/<?=$game->getVideourl() ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <script>
-                            $(".modal").on('hidden.bs.modal', function (e) {
-                                $(".modal iframe").attr("src", $(".modal iframe").attr("src"));
-                            });
-                        </script>
                     <?php endif; ?>
                 </div>
                 <div class="desc text-center">
@@ -114,4 +109,10 @@ $userMapper = $this->get('userMapper');
         <li class="list-group-item"><?=$this->getTrans('noEntries') ?></li>
     </ul>
 <?php endif; ?>
+
+<script>
+    $(".modal").on('hidden.bs.modal', function (e) {
+        $(".modal iframe").attr("src", $(".modal iframe").attr("src"));
+    });
+</script>
 

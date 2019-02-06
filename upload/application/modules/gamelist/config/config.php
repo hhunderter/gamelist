@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'gamelist',
-        'version' => '1.1.0',
+        'version' => '1.2.0',
         'icon_small' => 'fa-gamepad',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -36,8 +36,8 @@ class Config extends \Ilch\Config\Install
     public function uninstall()
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_gamelist`;
-                                      DROP TABLE `[prefix]_gamelist_cats`;
-                                      DROP TABLE `[prefix]_gamelist_entrants`;');
+                                 DROP TABLE `[prefix]_gamelist_cats`;
+                                 DROP TABLE `[prefix]_gamelist_entrants`;');
         $this->db()->queryMulti("DELETE FROM `[prefix]_user_menu_settings_links` WHERE `key` = 'gamelist/index/settings';");
 
         $profileFieldId = (int) $this->db()->select('id')
@@ -68,12 +68,12 @@ class Config extends \Ilch\Config\Install
                 `game_id` INT(11) NOT NULL,
                 `user_id` INT(11) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_gamelist_cats` (
-                  `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `title` VARCHAR(100) NOT NULL,
-                  PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+              `id` INT(11) NOT NULL AUTO_INCREMENT,
+              `title` VARCHAR(100) NOT NULL,
+              PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             INSERT INTO `[prefix]_user_menu_settings_links` (`key`, `locale`, `description`, `name`) VALUES
                 ("gamelist/index/settings", "de_DE", "Hier kannst du deine Spielliste bearbeiten.", "Spieleauswahl"),
@@ -90,6 +90,27 @@ class Config extends \Ilch\Config\Install
 
     public function getUpdate($installedVersion)
     {
+        switch ($installedVersion) {
+            case "1.0.0":
+            case "1.1.0":
+                // Create table gamelist_cats if it doesn't already exist.
+                if (!$this->db()->ifTableExists('[prefix]_gamelist_cats')) {
+                    $this->db()->query('CREATE TABLE IF NOT EXISTS `[prefix]_gamelist_cats` (
+                                          `id` INT(11) NOT NULL AUTO_INCREMENT,
+                                          `title` VARCHAR(100) NOT NULL,
+                                          PRIMARY KEY (`id`)
+                                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
+                }
 
+                // Add column catid if it doesn't already exist.
+                if (!$this->db()->ifColumnExists('[prefix]_gamelist', 'catid')) {
+                    $this->db()->query('ALTER TABLE `[prefix]_gamelist` ADD COLUMN `catid` INT(11) NOT NULL AFTER `id`;');
+                }
+
+                // Add column videourl if it doesn't already exist.
+                if (!$this->db()->ifColumnExists('[prefix]_gamelist', 'videourl')) {
+                    $this->db()->query('ALTER TABLE `[prefix]_gamelist` ADD COLUMN `videourl` VARCHAR(100) NOT NULL AFTER `title`;');
+                }
+        }
     }
 }

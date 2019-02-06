@@ -16,6 +16,7 @@ return [
     'profileFieldHidden' => 'Feld vom Administrator ausgeblendet.',
     'menuCats' => 'Kategorien',
     'cat' => 'Kategorie',
+    'entries' => 'Einträge',
     'noCategory' => 'Keine Kategorien vorhanden',
 
     'menuPanel' => 'User Panel',

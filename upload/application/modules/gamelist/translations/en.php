@@ -16,6 +16,7 @@ return [
     'profileFieldHidden' => 'Field hidden by the administrator.',
     'menuCats' => 'Categories',
     'cat' => 'Category',
+    'entries' => 'Entries',
     'noCategory' => 'No Category available',
 
     'menuPanel' => 'User Panel',

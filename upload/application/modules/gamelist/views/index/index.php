@@ -16,7 +16,7 @@ $userMapper = $this->get('userMapper');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand">Navigation</a>
+                <a class="navbar-brand"><?=$this->getTrans('navigation') ?></a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -62,7 +62,7 @@ $userMapper = $this->get('userMapper');
                                         <h4 class="modal-title"><?=$this->escape($game->getTitle()) ?></h4>
                                     </div>
                                     <div class="modal-body">
-                                        <iframe width="100%" height="250px" src="https://www.youtube-nocookie.com/embed/<?=$game->getVideourl() ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        <iframe id="videoGame_<?=$game->getId() ?>" width="100%" height="250px" src="https://www.youtube-nocookie.com/embed/<?=$game->getVideourl() ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                     </div>
                                 </div>
                             </div>
@@ -112,7 +112,8 @@ $userMapper = $this->get('userMapper');
 
 <script>
     $(".modal").on('hidden.bs.modal', function (e) {
-        $(".modal iframe").attr("src", $(".modal iframe").attr("src"));
+        var videoSRC = $(this).find('iframe').attr("src");
+        $(this).find('iframe').attr("src", videoSRC);
     });
 </script>
 

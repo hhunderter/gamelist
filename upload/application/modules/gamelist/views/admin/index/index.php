@@ -22,26 +22,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('entries') as $entry) : ?>
+                    <?php if ($this->get('entries')): ?>
+                        <?php foreach ($this->get('entries') as $entry) : ?>
+                            <tr>
+                                <td><?=$this->getDeleteCheckbox('check_entries', $entry->getId()) ?></td>
+                                <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $entry->getId()]) ?></td>
+                                <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $entry->getId()]) ?></td>
+                                <td>
+                                    <?php if ($entry->getShow() == 1): ?>
+                                        <a href="<?=$this->getUrl(['action' => 'update', 'id' => $entry->getId()], null, true) ?>">
+                                            <span class="fa fa-check-square-o text-info"></span>
+                                        </a>
+                                    <?php else: ?>
+                                        <a href="<?=$this->getUrl(['action' => 'update', 'id' => $entry->getId()], null, true) ?>">
+                                            <span class="fa fa-square-o text-info"></span>
+                                        </a>
+                                    <?php endif; ?>
+                                </td>
+                                <td><?=$this->escape($entry->getTitle()) ?></td>
+                                <td><?=$this->escape($entry->getVideourl()) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
                         <tr>
-                            <td><?=$this->getDeleteCheckbox('check_entries', $entry->getId()) ?></td>
-                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $entry->getId()]) ?></td>
-                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $entry->getId()]) ?></td>
-                            <td>
-                                <?php if ($entry->getShow() == 1): ?>
-                                    <a href="<?=$this->getUrl(['action' => 'update', 'id' => $entry->getId()], null, true) ?>">
-                                        <span class="fa fa-check-square-o text-info"></span>
-                                    </a>
-                                <?php else: ?>
-                                    <a href="<?=$this->getUrl(['action' => 'update', 'id' => $entry->getId()], null, true) ?>">
-                                        <span class="fa fa-square-o text-info"></span>
-                                    </a>
-                                <?php endif; ?>
-                            </td>
-                            <td><?=$this->escape($entry->getTitle()) ?></td>
-                            <td><?=$this->escape($entry->getVideourl()) ?></td>
+                            <td colspan="6"><?=$this->getTrans('noEntries') ?></td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>

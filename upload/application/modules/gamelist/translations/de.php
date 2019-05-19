@@ -17,7 +17,9 @@ return [
     'menuCats' => 'Kategorien',
     'cat' => 'Kategorie',
     'entries' => 'Einträge',
+    'navigation' => 'Navigation',
     'noCategory' => 'Keine Kategorien vorhanden',
+    'treatCatBefore' => 'Bitte lege zuerst eine Kategorie an.',
 
     'menuPanel' => 'User Panel',
     'menuSettings' => 'Einstellungen',

@@ -107,29 +107,6 @@ class Games extends \Ilch\Model
     }
 
     /**
-     * Sets the videourl.
-     *
-     * @param string $videourl
-     * @return $this
-     */
-    public function setVideourl($videourl)
-    {
-        $this->videourl = (string)$videourl;
-
-        return $this;
-    }
-
-    /**
-     * Gets the videourl.
-     *
-     * @return string
-     */
-    public function getVideourl()
-    {
-        return $this->videourl;
-    }
-
-    /**
      * Sets the title.
      *
      * @param string $title
@@ -184,6 +161,29 @@ class Games extends \Ilch\Model
     public function setShow($show)
     {
         $this->show = (int)$show;
+
+        return $this;
+    }
+
+    /**
+     * Gets the videourl.
+     *
+     * @return string
+     */
+    public function getVideourl()
+    {
+        return $this->videourl;
+    }
+
+    /**
+     * Sets the videourl.
+     *
+     * @param string $videourl
+     * @return $this
+     */
+    public function setVideourl($videourl)
+    {
+        $this->videourl = (string)$videourl;
 
         return $this;
     }

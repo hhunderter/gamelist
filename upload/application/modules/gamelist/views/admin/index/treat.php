@@ -1,10 +1,10 @@
 <h1><?=($this->get('entry') != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
-<?php if ($this->get('cats') != ''): ?>
+<?php if ($this->get('cats')): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
-        <div class="form-group <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
+        <div class="form-group<?=$this->validation()->hasError('catId') ? ' has-error' : '' ?>">
             <label for="catId" class="col-lg-2 control-label">
-                <?=$this->getTrans('cat'); ?>:
+                <?=$this->getTrans('cat') ?>:
             </label>
             <div class="col-lg-3">
                 <select class="form-control" id="catid" name="catid">
@@ -23,7 +23,7 @@
                 </select>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+        <div class="form-group<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
             <label for="title" class="col-lg-2 control-label">
                 <?=$this->getTrans('title') ?>:
             </label>
@@ -47,7 +47,7 @@
                        value="<?=($this->get('entry') != '') ? $this->escape($this->get('entry')->getVideourl()) : $this->originalInput('videourl') ?>">
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
+        <div class="form-group<?=$this->validation()->hasError('image') ? ' has-error' : '' ?>">
             <label for="selectedImage" class="col-lg-2 control-label">
                 <?=$this->getTrans('image') ?>:
             </label>
@@ -68,14 +68,10 @@
                 </div>
             </div>
         </div>
-        <?php if ($this->get('entry') != ''): ?>
-            <?=$this->getSaveBar('updateButton') ?>
-        <?php else: ?>
-            <?=$this->getSaveBar('addButton') ?>
-        <?php endif; ?>
+        <?=($this->get('entry')) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
     </form>
 <?php else: ?>
-    <?=$this->getTrans('noCategory') ?>
+    <?=$this->getTrans('treatCatBefore') ?>
 <?php endif; ?>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>

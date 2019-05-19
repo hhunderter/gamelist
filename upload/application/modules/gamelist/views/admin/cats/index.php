@@ -1,28 +1,28 @@
 <?php $gamesMapper = $this->get('gamesMapper'); ?>
 
 <h1><?=$this->getTrans('menuCats') ?></h1>
-<?php if (!empty($this->get('cats'))): ?>
-    <form class="form-horizontal" method="POST" action="">
-        <?=$this->getTokenField() ?>
-        <div class="table-responsive">
-            <table class="table table-hover table-striped">
-                <colgroup>
-                    <col class="icon_width">
-                    <col class="icon_width">
-                    <col class="icon_width">
-                    <col class="icon_width">
-                    <col>
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th><?=$this->getCheckAllCheckbox('check_cats') ?></th>
-                        <th></th>
-                        <th></th>
-                        <th><?=$this->getTrans('entries') ?></th>
-                        <th><?=$this->getTrans('title') ?></th>
-                    </tr>
-                </thead>
-                <tbody>
+<form class="form-horizontal" method="POST" action="">
+    <?=$this->getTokenField() ?>
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <colgroup>
+                <col class="icon_width">
+                <col class="icon_width">
+                <col class="icon_width">
+                <col class="icon_width">
+                <col>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th><?=$this->getCheckAllCheckbox('check_cats') ?></th>
+                    <th></th>
+                    <th></th>
+                    <th><?=$this->getTrans('entries') ?></th>
+                    <th><?=$this->getTrans('title') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($this->get('cats')): ?>
                     <?php foreach ($this->get('cats') as $cat): ?>
                         <?php $countGames = count($gamesMapper->getEntries(['catid' => $cat->getId()])); ?>
                         <tr>
@@ -33,11 +33,13 @@
                             <td><?=$this->escape($cat->getTitle()) ?></td>
                         </tr>
                     <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-        <?=$this->getListBar(['delete' => 'delete']) ?>
-    </form>
-<?php else: ?>
-    <?=$this->getTrans('noCategory') ?>
-<?php endif; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="5"><?=$this->getTrans('noCategory') ?></td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+    <?=$this->getListBar(['delete' => 'delete']) ?>
+</form>

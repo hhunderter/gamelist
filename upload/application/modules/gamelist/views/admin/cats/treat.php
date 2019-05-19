@@ -1,10 +1,4 @@
-<h1>
-    <?php if ($this->get('cat') != ''): ?>
-        <?=$this->getTrans('edit') ?>
-   <?php else: ?>
-        <?=$this->getTrans('add') ?>
-    <?php endif; ?>
-</h1>
+<h1><?=($this->get('cat')) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField(); ?>
     <div class="form-group">
@@ -16,12 +10,8 @@
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?php if ($this->get('cat') != '') { echo $this->escape($this->get('cat')->getTitle()); } ?>" />
+                   value="<?=($this->get('cat')) ? $this->escape($this->get('cat')->getTitle()) : '' ?>" />
         </div>
     </div>
-    <?php if ($this->get('cat') != ''): ?>
-        <?=$this->getSaveBar('updateButton') ?>
-    <?php else: ?>
-        <?=$this->getSaveBar('addButton') ?>
-    <?php endif; ?>
+    <?=($this->get('cat')) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
 </form>

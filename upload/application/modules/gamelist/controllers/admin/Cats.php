@@ -113,7 +113,7 @@ class Cats extends \Ilch\Controller\Admin
     public function delCatAction()
     {
         $gamesMapper = new GamesMapper();
-        $countGames = count($gamesMapper->getEntries(['cat_id' => $this->getRequest()->getParam('id')]));
+        $countGames = count($gamesMapper->getEntries(['catid' => $this->getRequest()->getParam('id')]));
 
         if ($countGames == 0) {
             if ($this->getRequest()->isSecure()) {

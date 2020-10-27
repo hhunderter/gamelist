@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'gamelist',
-        'version' => '1.3.0',
+        'version' => '1.4.0',
         'icon_small' => 'fa-gamepad',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -66,7 +66,8 @@ class Config extends \Ilch\Config\Install
 
             CREATE TABLE IF NOT EXISTS `[prefix]_gamelist_entrants` (
                 `game_id` INT(11) NOT NULL,
-                `user_id` INT(11) NOT NULL
+                `user_id` INT(11) UNSIGNED NOT NULL,
+                CONSTRAINT `[prefix]_gamelist_entrants_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users`(`id`) ON DELETE CASCADE 
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_gamelist_cats` (
@@ -111,6 +112,11 @@ class Config extends \Ilch\Config\Install
                 if (!$this->db()->ifColumnExists('[prefix]_gamelist', 'videourl')) {
                     $this->db()->query('ALTER TABLE `[prefix]_gamelist` ADD COLUMN `videourl` VARCHAR(100) NOT NULL AFTER `title`;');
                 }
+            case "1.2.0":
+            case "1.3.0":
+            case "1.4.0":
+                $this->db()->query('ALTER TABLE `[prefix]_gamelist_entrants` MODIFY COLUMN `user_id` INT(11) UNSIGNED NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_gamelist_entrants` ADD CONSTRAINT `[prefix]_gamelist_entrants_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users`(`id`) ON DELETE CASCADE;');
         }
     }
 }

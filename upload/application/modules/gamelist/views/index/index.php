@@ -90,7 +90,6 @@ $userMapper = $this->get('userMapper');
                                     <?php foreach ($entrantsUsers as $user): ?>
                                         <div class="entrants-user">
                                             <?php $entrantsUser = $userMapper->getUserById($user->getUserId()); ?>
-                                            <?php if (!$entrantsUser) $entrantsUser = $userMapper->getDummyUser(); ?>
                                             <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" class="entrants-user-link">
                                                 <img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>">
                                                 <?=$this->escape($entrantsUser->getName()) ?>

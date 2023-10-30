@@ -7,33 +7,28 @@ $userMapper = $this->get('userMapper');
 ?>
 <h1><?=$this->getTrans('menuGames') ?></h1>
 <?php if (!empty($games)): ?>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 border rounded">
         <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand"><?=$this->getTrans('navigation') ?></a>
-            </div>
+              <a class="navbar-brand"><?=$this->getTrans('navigation') ?></a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="<?=$this->getTrans('tooglenavigation') ?>">
+                <span class="navbar-toggler-icon"></span>
+              </button>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <?php foreach ($categories as $category):
                         $countGames = count($gameMapper->getEntries(['catid' => $category->getId()]));
                         if ($category->getId() == $this->getRequest()->getParam('catid') OR $category->getId() == $this->get('firstCatId')) {
-                            $active = 'class="active"';
+                            $active = 'active';
                         } else {
                             $active = '';
                         }
 
                         if ($countGames > 0): ?>
-                            <li <?=$active ?>>
-                                <a href="<?=$this->getUrl('gamelist/index/index/catid/'.$category->getId()) ?>">
+                            <li class="nav-item">
+                                <a class="nav-link <?=$active ?>" href="<?=$this->getUrl('gamelist/index/index/catid/'.$category->getId()) ?>">
                                     <b><?=$this->escape($category->getTitle()) ?></b>
-                                    <span class="badge"><?=$countGames ?></span>
+                                    <span class="badge rounded-pill bg-secondary"><?=$countGames ?></span>
                                 </a>
                             </li>
                         <?php endif; ?>
@@ -50,7 +45,7 @@ $userMapper = $this->get('userMapper');
                     <?php if (!$game->getVideourl()):?>
                         <img src="<?=(substr($game->getImage(), 0, 11) == 'application') ? $this->getBaseUrl($game->getImage()) : $game->getImage() ?>" alt="<?=$this->escape($game->getTitle()) ?>" title="<?=$this->escape($game->getTitle()) ?>" />
                     <?php else: ?>
-                        <a href="#" data-toggle="modal" data-target="#videoModal_<?=$game->getId() ?>">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#videoModal_<?=$game->getId() ?>">
                         <img src="<?=(substr($game->getImage(), 0, 11) == 'application') ? $this->getBaseUrl($game->getImage()) : $game->getImage() ?>" alt="<?=$this->escape($game->getTitle()) ?>" title="<?=$this->escape($game->getTitle()) ?>" />
                         </a>
                         <!-- Video Modal -->
@@ -58,8 +53,8 @@ $userMapper = $this->get('userMapper');
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         <h4 class="modal-title"><?=$this->escape($game->getTitle()) ?></h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
                                         <iframe id="videoGame_<?=$game->getId() ?>" width="100%" height="250px" src="https://www.youtube-nocookie.com/embed/<?=$game->getVideourl() ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -72,7 +67,7 @@ $userMapper = $this->get('userMapper');
                 <div class="desc text-center">
                     <span><?=$this->escape($game->getTitle()) ?></span>
                     <?php if (count($entrantsUsers) > 0): ?>
-                        <a data-toggle="modal" data-target="#entrantsModal_<?=$game->getId() ?>"><?=count($entrantsUsers) ?> <?=$this->getTrans('members') ?></a>
+                        <a data-bs-toggle="modal" data-bs-target="#entrantsModal_<?=$game->getId() ?>"><?=count($entrantsUsers) ?> <?=$this->getTrans('members') ?></a>
                     <?php else: ?>
                         <?=count($entrantsUsers) ?> <?=$this->getTrans('members') ?>
                     <?php endif; ?>
@@ -83,8 +78,8 @@ $userMapper = $this->get('userMapper');
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     <h4 class="modal-title"><?=$this->getTrans('members') ?></h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
                                     <?php foreach ($entrantsUsers as $user): ?>
@@ -116,4 +111,3 @@ $userMapper = $this->get('userMapper');
         $(this).find('iframe').attr("src", videoSRC);
     });
 </script>
-

@@ -1,11 +1,11 @@
 <h1><?=($this->get('cat')) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField(); ?>
-    <div class="form-group">
-        <label for="title" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="title" class="col-xl-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <input type="text"
                    class="form-control"
                    id="title"

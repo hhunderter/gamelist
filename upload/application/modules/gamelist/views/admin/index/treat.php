@@ -2,11 +2,11 @@
 <?php if ($this->get('cats')): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
-        <div class="form-group<?=$this->validation()->hasError('catId') ? ' has-error' : '' ?>">
-            <label for="catId" class="col-lg-2 control-label">
+        <div class="row mb-3 <?=$this->validation()->hasError('catId') ? ' has-error' : '' ?>">
+            <label for="catId" class="col-xl-2 control-label">
                 <?=$this->getTrans('cat') ?>:
             </label>
-            <div class="col-lg-3">
+            <div class="col-xl-3">
                 <select class="form-control" id="catid" name="catid">
                     <?php foreach ($this->get('cats') as $model) {
                         $selected = '';
@@ -23,11 +23,11 @@
                 </select>
             </div>
         </div>
-        <div class="form-group<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
-            <label for="title" class="col-lg-2 control-label">
+        <div class="row mb-3 <?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
+            <label for="title" class="col-xl-2 control-label">
                 <?=$this->getTrans('title') ?>:
             </label>
-            <div class="col-lg-3">
+            <div class="col-xl-3">
                 <input type="text"
                        class="form-control"
                        name="title"
@@ -35,11 +35,11 @@
                        value="<?=($this->get('entry') != '') ? $this->escape($this->get('entry')->getTitle()) : $this->originalInput('title') ?>">
             </div>
         </div>
-        <div class="form-group">
-            <label for="title" class="col-lg-2 control-label">
+        <div class="row mb-3">
+            <label for="title" class="col-xl-2 control-label">
                 <?=$this->getTrans('videourl') ?>:
             </label>
-            <div class="col-lg-3">
+            <div class="col-xl-3">
                 <input type="text"
                        class="form-control"
                        name="videourl"
@@ -47,11 +47,11 @@
                        value="<?=($this->get('entry') != '') ? $this->escape($this->get('entry')->getVideourl()) : $this->originalInput('videourl') ?>">
             </div>
         </div>
-        <div class="form-group<?=$this->validation()->hasError('image') ? ' has-error' : '' ?>">
-            <label for="selectedImage" class="col-lg-2 control-label">
+        <div class="row mb-3 <?=$this->validation()->hasError('image') ? ' has-error' : '' ?>">
+            <label for="selectedImage" class="col-xl-2 control-label">
                 <?=$this->getTrans('image') ?>:
             </label>
-            <div class="col-lg-3">
+            <div class="col-xl-3">
                 <div class="input-group">
                     <input type="text"
                            class="form-control"
@@ -59,10 +59,10 @@
                            name="image"
                            placeholder="<?=$this->getTrans('httpOrMedia') ?>"
                            value="<?=($this->get('entry') != '') ? $this->escape($this->get('entry')->getImage()) : $this->originalInput('image') ?>" />
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <span class="fa fa-times"></span>
                     </span>
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a>
                     </span>
                 </div>

@@ -26,6 +26,7 @@ return [
     'setting' => 'Einstellung',
     'submit' => 'Absenden',
 
+    'tooglenavigation' => 'Toggle navigation',
     'panel' => 'Panel',
     'dialog' => 'Nachrichten',
     'gallery' => 'Galerie',

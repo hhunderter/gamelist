@@ -1,6 +1,6 @@
 <h1><?=$this->getTrans('manage') ?></h1>
 <?php if ($this->get('entries') != ''): ?>
-    <form class="form-horizontal" method="POST" action="">
+    <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
@@ -31,11 +31,11 @@
                                 <td>
                                     <?php if ($entry->getShow() == 1): ?>
                                         <a href="<?=$this->getUrl(['action' => 'update', 'id' => $entry->getId()], null, true) ?>">
-                                            <span class="fa fa-check-square-o text-info"></span>
+                                            <span class="fa-regular fa-square-check text-info"></span>
                                         </a>
                                     <?php else: ?>
                                         <a href="<?=$this->getUrl(['action' => 'update', 'id' => $entry->getId()], null, true) ?>">
-                                            <span class="fa fa-square-o text-info"></span>
+                                            <span class="fa-regular fa-square text-info"></span>
                                         </a>
                                     <?php endif; ?>
                                 </td>

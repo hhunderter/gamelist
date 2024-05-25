@@ -9,11 +9,11 @@
         <div class="profile-content active">
             <h1><?=$this->getTrans('gamesSelection') ?></h1>
             <?php if (!empty($this->get('entries'))) : ?>
-            <form class="form-horizontal" method="POST" action="">
+            <form method="POST" action="">
                 <?=$this->getTokenField() ?>
 
                 <div class="row mb-3">
-                    <label for="assignedGames" class="col-xl-3 control-label">
+                    <label for="assignedGames" class="col-xl-3 col-form-label">
                         <?=$this->getTrans('games') ?>
                     </label>
                     <div class="col-xl-9">
@@ -39,7 +39,7 @@
                         </select>
                         <?php if ($this->get('profileField')->getShow() == 0): ?>
                             <span class="input-group-text" data-bs-toggle="tooltip" data-placement="bottom" title="<?=$this->getTrans('profileFieldHidden') ?>">
-                                <span class="fa fa-eye-slash"></span>
+                                <span class="fa-regular fa-eye-slash"></span>
                             </span>
                             </div>
                     <?php endif; ?>

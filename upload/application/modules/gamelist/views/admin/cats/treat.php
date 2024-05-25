@@ -1,8 +1,8 @@
 <h1><?=($this->get('cat')) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField(); ?>
     <div class="row mb-3">
-        <label for="title" class="col-xl-2 control-label">
+        <label for="title" class="col-xl-2 col-form-label">
             <?=$this->getTrans('title') ?>:
         </label>
         <div class="col-xl-3">

@@ -10,10 +10,10 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'gamelist',
-        'version' => '1.4.0',
-        'icon_small' => 'fa-gamepad',
+        'version' => '1.5.0',
+        'icon_small' => 'fa-solid fa-gamepad',
         'author' => 'Veldscholten, Kevin',
-        'link' => 'http://ilch.de',
+        'link' => 'https://ilch.de',
         'languages' => [
             'de_DE' => [
                 'name' => 'Spieleliste',
@@ -24,8 +24,8 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage the game list.',
             ],
         ],
-        'ilchCore' => '2.1.18',
-        'phpVersion' => '5.6'
+        'ilchCore' => '2.2.0',
+        'phpVersion' => '7.3'
     ];
 
     public function install()
@@ -114,9 +114,12 @@ class Config extends \Ilch\Config\Install
                 }
             case "1.2.0":
             case "1.3.0":
-            case "1.4.0":
                 $this->db()->query('ALTER TABLE `[prefix]_gamelist_entrants` MODIFY COLUMN `user_id` INT(11) UNSIGNED NOT NULL;');
                 $this->db()->query('ALTER TABLE `[prefix]_gamelist_entrants` ADD CONSTRAINT `[prefix]_gamelist_entrants_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users`(`id`) ON DELETE CASCADE;');
+            case "1.4.0":
+                $this->db()->update('modules', ['icon_small' => $this->config['icon_small']], ['key' => $this->config['key']])->execute();
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }

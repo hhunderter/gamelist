@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -16,7 +17,7 @@ class Category extends \Ilch\Mapper
      * @param array $where
      * @return CategoryModel[]|[]
      */
-    public function getCategories($where = [])
+    public function getCategories(array $where = []): array
     {
         $categoryArray = $this->db()->select('*')
             ->from('gamelist_cats')
@@ -46,7 +47,7 @@ class Category extends \Ilch\Mapper
      * @param int $id
      * @return false|CategoryModel
      */
-    public function getCategoryById($id)
+    public function getCategoryById(int $id)
     {
         $cats = $this->getCategories(['id' => $id]);
         return reset($cats);
@@ -57,7 +58,7 @@ class Category extends \Ilch\Mapper
      *
      * @return null|CategoryModel
      */
-    public function getCategoryMinId()
+    public function getCategoryMinId(): ?CategoryModel
     {
         $categoryRow = $this->db()->select('*')
             ->fields(['c.id', 'c.title', 'games' => 'f.catid'])
@@ -100,9 +101,9 @@ class Category extends \Ilch\Mapper
     /**
      * Deletes category with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function delete($id)
+    public function delete(int $id)
     {
         $this->db()->delete('gamelist_cats')
             ->where(['id' => $id])

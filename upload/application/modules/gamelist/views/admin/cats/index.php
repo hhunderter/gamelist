@@ -1,5 +1,13 @@
-<?php $gamesMapper = $this->get('gamesMapper'); ?>
+<?php
 
+/** @var \Ilch\View $this */
+
+/** @var Modules\Gamelist\Models\Category[] $cats */
+$cats = $this->get('cats');
+
+/** @var Modules\Gamelist\Mappers\Games $gamesMapper */
+$gamesMapper = $this->get('gamesMapper');
+?>
 <h1><?=$this->getTrans('menuCats') ?></h1>
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
@@ -22,18 +30,18 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if ($this->get('cats')): ?>
-                    <?php foreach ($this->get('cats') as $cat): ?>
+                <?php if ($cats) : ?>
+                    <?php foreach ($cats as $cat) : ?>
                         <?php $countGames = count($gamesMapper->getEntries(['catid' => $cat->getId()])); ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_cats', $cat->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $cat->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delcat', 'id' => $cat->getId()]) ?></td>
-                            <td align="center"><?=$countGames ?></td>
+                            <td class="text-center"><?=$countGames ?></td>
                             <td><?=$this->escape($cat->getTitle()) ?></td>
                         </tr>
                     <?php endforeach; ?>
-                <?php else: ?>
+                <?php else : ?>
                     <tr>
                         <td colspan="5"><?=$this->getTrans('noCategory') ?></td>
                     </tr>

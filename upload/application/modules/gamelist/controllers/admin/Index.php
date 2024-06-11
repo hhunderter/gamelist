@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -42,8 +43,7 @@ class Index extends \Ilch\Controller\Admin
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuGames',
             $items
         );
@@ -75,24 +75,32 @@ class Index extends \Ilch\Controller\Admin
         $gamesMapper = new GamesMapper();
         $categoryMapper = new CategoryMapper();
 
+        $model = new GamesModel();
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuGames'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
-            $this->getView()->set('entry', $gamesMapper->getEntryById($this->getRequest()->getParam('id')));
+            $model = $gamesMapper->getEntryById($this->getRequest()->getParam('id'));
+
+            if (!$model) {
+                $this->redirect()
+                    ->withMessage('notfound', 'danger')
+                    ->to(['action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuGames'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
+        $this->getView()->set('entry', $model);
 
         if ($this->getRequest()->isPost()) {
             // Add BASE_URL if image starts with application to get a complete URL for validation
             $image = trim($this->getRequest()->getPost('image'));
             if (!empty($image)) {
                 if (substr($image, 0, 11) == 'application') {
-                    $image = BASE_URL.'/'.$image;
+                    $image = BASE_URL . '/' . $image;
                 }
             }
 
@@ -103,24 +111,24 @@ class Index extends \Ilch\Controller\Admin
                 'image' => $image
             ];
 
-            $newvideoUrl = str_replace("https://www.youtube.com/watch?v=","", $post['videourl']);
+            $newvideoUrl = str_replace("https://www.youtube.com/watch?v=", "", $post['videourl']);
 
             $validation = Validation::create($post, [
                 'title'  => 'required',
-                'image' => 'required|url'
+                'image' => 'required|url',
+                'catid' => 'required|numeric|exists:gamelist_cats,id'
             ]);
 
             $post['image'] = trim($this->getRequest()->getPost('image'));
 
             if ($validation->isValid()) {
-                $model = new GamesModel();
-                if ($this->getRequest()->getParam('id')) {
-                    $model->setId($this->getRequest()->getParam('id'));
+                if (!$model->getId()) {
+                    $model->setShow(true);
                 }
                 $model->setTitle($post['title'])
-                      ->setCatId($post['catid'])
-                      ->setVideourl($newvideoUrl)
-                      ->setImage($post['image']);
+                    ->setCatId($post['catid'])
+                    ->setVideourl($newvideoUrl)
+                    ->setImage($post['image']);
                 $gamesMapper->save($model);
 
                 $this->redirect()
@@ -132,7 +140,7 @@ class Index extends \Ilch\Controller\Admin
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'treat']);
+                ->to(array_merge(['action' => 'treat'], $model->getId() ? ['id' => $model->getId()] : []));
         }
         $this->getView()->set('cats', $categoryMapper->getCategories());
     }

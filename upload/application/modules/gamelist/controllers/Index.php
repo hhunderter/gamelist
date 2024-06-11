@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -22,17 +23,13 @@ class Index extends \Ilch\Controller\Frontend
     {
         $gamesMapper = new GamesMapper();
         $entrantsMapper = new EntrantsMapper();
-        $userMapper = new UserMapper;
-        $categoryMapper = new CategoryMapper;
-
+        $userMapper = new UserMapper();
+        $categoryMapper = new CategoryMapper();
         $this->getLayout()->header()->css('static/css/gamelist.css');
         $this->getLayout()->getTitle()->add($this->getTranslator()->trans('menuGames'));
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuGames'), ['action' => 'index']);
-
-
         if ($this->getRequest()->getParam('catid')) {
             $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('catid'));
-
             if (!$category) {
                 $this->redirect(['action' => 'index']);
             }
@@ -40,24 +37,18 @@ class Index extends \Ilch\Controller\Frontend
             $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuGames'), ['action' => 'index'])
                 ->add($category->getTitle(), ['action' => 'index', 'catid' => $category->getId()]);
-
             $games = $gamesMapper->getEntries(['catid' => $this->getRequest()->getParam('catid')]);
         } else {
             $catId = $categoryMapper->getCategoryMinId();
-
             if ($catId != '') {
                 $category = $categoryMapper->getCategoryById($catId->getId());
-
                 $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuGames'), ['action' => 'index'])
                     ->add($category->getTitle(), ['action' => 'index', 'catid' => $category->getId()]);
-
                 $games = $gamesMapper->getEntries(['catid' => $catId->getId()]);
-
                 $this->getView()->set('firstCatId', $catId->getId());
             } else {
                 $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuGames'), ['action' => 'index']);
-
                 $games = $gamesMapper->getEntries();
             }
         }
@@ -68,7 +59,6 @@ class Index extends \Ilch\Controller\Frontend
             ->set('games', $games)
             ->set('categorys', $categoryMapper->getCategories())
             ->set('entries', $gamesMapper->getEntries(['show' => 1]));
-
     }
 
     public function settingsAction()
@@ -80,9 +70,7 @@ class Index extends \Ilch\Controller\Frontend
         $UserMenuMapper = new UserMenuMapper();
         $profileFieldsMapper = new ProfileFieldsMapper();
         $profileFieldsContentMapper = new ProfileFieldsContentMapper();
-
         $profileField = $profileFieldsMapper->getProfileFieldIdByKey('gamelist_games');
-
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuPanel'))
             ->add($this->getTranslator()->trans('menuSettings'))
@@ -91,29 +79,31 @@ class Index extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuPanel'), ['module' => 'user', 'controller' => 'panel', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuSettings'), ['module' => 'user', 'controller' => 'panel', 'action' => 'settings'])
             ->add($this->getTranslator()->trans('gamesSelection'), ['controller' => 'index', 'action' => 'settings']);
-
         if ($this->getRequest()->getPost('saveGames')) {
             $entrantsMapper->deleteByUserId($this->getUser()->getId());
 
-            foreach ($this->getRequest()->getPost('games') as $gameId) {
-                $entrantsModel->setGameId($gameId)
-                    ->setUserId($this->getUser()->getId());
-                $entrantsMapper->save($entrantsModel);
-            }
-
             $games = [];
-            foreach ($this->getRequest()->getPost('games') as $gameId) {
+            foreach ($this->getRequest()->getPost('games') ?? [] as $gameId) {
                 $game = $gamesMapper->getEntryById($gameId);
 
-                $games[] = $game->getTitle();
-            }
-            $games = implode(", ", $games);
+                if ($game) {
+                    $entrantsModel->setGameId($game->getId())
+                        ->setUserId($this->getUser()->getId());
+                    $entrantsMapper->save($entrantsModel);
 
+                    $games[] = $game->getTitle();
+                }
+            }
+
+            $games = implode(", ", $games);
             $profileFieldsContent = new ProfileFieldContentModel();
             $profileFieldsContent->setFieldId($profileField->getId())
                 ->setUserId($this->getUser()->getId())
                 ->setValue($games);
             $profileFieldsContentMapper->save($profileFieldsContent);
+            $this->redirect()
+                ->withMessage('saveSuccess')
+                ->to(['action' => 'settings']);
         }
 
         $this->getView()->set('gamesEntrants', $entrantsMapper->getEntrantsByUserId($this->getUser()->getId()))

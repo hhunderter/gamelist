@@ -1,7 +1,14 @@
-<h1><?=($this->get('cat')) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var Modules\Gamelist\Models\Category $cat */
+$cat = $this->get('cat');
+?>
+<h1><?=$this->getTrans($cat->getId() ? 'edit' : 'add') ?></h1>
 <form method="POST" action="">
     <?=$this->getTokenField(); ?>
-    <div class="row mb-3">
+    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
         <label for="title" class="col-xl-2 col-form-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -10,8 +17,8 @@
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=($this->get('cat')) ? $this->escape($this->get('cat')->getTitle()) : '' ?>" />
+                   value="<?=$this->escape($this->originalInput('title', $cat->getTitle())) ?>" />
         </div>
     </div>
-    <?=($this->get('cat')) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=$this->getSaveBar($cat->getId() ? 'updateButton' : 'addButton') ?>
 </form>

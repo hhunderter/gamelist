@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -18,7 +19,7 @@ class Entrants extends \Ilch\Mapper
      *
      * @return EntrantsModel|null
      */
-    public function getGameEntrants($gameId, $userId)
+    public function getGameEntrants(int $gameId, int $userId): ?EntrantsModel
     {
         $entryRow = $this->db()->select('*')
             ->from('gamelist_entrants')
@@ -44,7 +45,7 @@ class Entrants extends \Ilch\Mapper
      *
      * @return int
      */
-    public function getCountEntrans($gameId)
+    public function getCountEntrans(int $gameId): int
     {
         return $this->db()->select('COUNT(*)', 'gamelist_entrants')
             ->where(['game_id' => $gameId])
@@ -59,7 +60,7 @@ class Entrants extends \Ilch\Mapper
      *
      * @return EntrantsModel[]|array
      */
-    public function getEntrantsByGameId($gameId)
+    public function getEntrantsByGameId(int $gameId): array
     {
         $entryArray = $this->db()->select('*')
             ->from('gamelist_entrants')
@@ -88,7 +89,7 @@ class Entrants extends \Ilch\Mapper
      *
      * @return EntrantsModel[]|array
      */
-    public function getEntrantsByUserId($userId)
+    public function getEntrantsByUserId(int $userId): array
     {
         $entryArray = $this->db()->select('*')
             ->from('gamelist_entrants')
@@ -141,7 +142,7 @@ class Entrants extends \Ilch\Mapper
      * @param int $gameId
      * @param int $userId
      */
-    public function deleteUserFromGame($gameId, $userId)
+    public function deleteUserFromGame(int $gameId, int $userId)
     {
         $this->db()->delete('gamelist_entrants')
             ->where(['game_id' => $gameId, 'user_id' => $userId])
@@ -153,7 +154,7 @@ class Entrants extends \Ilch\Mapper
      *
      * @param int $userId
      */
-    public function deleteByUserId($userId)
+    public function deleteByUserId(int $userId)
     {
         $this->db()->delete('gamelist_entrants')
             ->where(['user_id' => $userId])

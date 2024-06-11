@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,21 +14,21 @@ class Entrants extends \Ilch\Model
      *
      * @var int
      */
-    protected $gameId;
+    protected $gameId = 0;
 
     /**
      * The user id.
      *
      * @var int
      */
-    protected $userId;
+    protected $userId = 0;
 
     /**
      * Gets the game id.
      *
      * @return int
      */
-    public function getGameId()
+    public function getGameId(): int
     {
         return $this->gameId;
     }
@@ -39,9 +40,9 @@ class Entrants extends \Ilch\Model
      *
      * @return $this
      */
-    public function setGameId($gameId)
+    public function setGameId(int $gameId): Entrants
     {
-        $this->gameId = (int)$gameId;
+        $this->gameId = $gameId;
 
         return $this;
     }
@@ -49,9 +50,9 @@ class Entrants extends \Ilch\Model
     /**
      * Gets the user id.
      *
-     * @return integer
+     * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -63,9 +64,9 @@ class Entrants extends \Ilch\Model
      *
      * @return $this
      */
-    public function setUserId($userId)
+    public function setUserId(int $userId): Entrants
     {
-        $this->userId = (int)$userId;
+        $this->userId = $userId;
 
         return $this;
     }

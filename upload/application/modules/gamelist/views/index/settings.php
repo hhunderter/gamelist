@@ -1,14 +1,24 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var Modules\Gamelist\Models\Games[] $entries */
+$entries = $this->get('entries');
+
+/** @var Modules\User\Models\ProfileField $profileField */
+$profileField = $this->get('profileField');
+?>
 <link href="<?=$this->getStaticUrl('css/chosen/bootstrap-chosen.css') ?>" rel="stylesheet">
 <link href="<?=$this->getVendorUrl('harvesthq/chosen/chosen.min.css') ?>" rel="stylesheet">
 <link href="<?=$this->getModuleUrl('../user/static/css/user.css') ?>" rel="stylesheet">
 
 <div class="row">
     <div class="col-xl-12 profile">
-        <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
+        <?php include APPLICATION_PATH . '/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
             <h1><?=$this->getTrans('gamesSelection') ?></h1>
-            <?php if (!empty($this->get('entries'))) : ?>
+            <?php if (!empty($entries)) : ?>
             <form method="POST" action="">
                 <?=$this->getTokenField() ?>
 
@@ -17,7 +27,7 @@
                         <?=$this->getTrans('games') ?>
                     </label>
                     <div class="col-xl-9">
-                        <?php if ($this->get('profileField')->getShow() == 0): ?>
+                        <?php if ($profileField->getShow() == 0) : ?>
                             <div class="input-group">
                         <?php endif; ?>
                         <select class="chosen-select form-control"
@@ -25,9 +35,11 @@
                                 name="games[]"
                                 data-placeholder="<?=$this->getTrans('selectGames') ?>"
                                 multiple>
-                            <?php foreach ($this->get('entries') as $game): ?>
+                            <?php foreach ($entries as $game) : ?>
                                 <option value="<?=$game->getId() ?>"
-                                    <?php foreach ($this->get('gamesEntrants') as $assignedGame) {
+                                    <?php
+                                    /** @var Modules\Gamelist\Models\Entrants $assignedGame */
+                                    foreach ($this->get('gamesEntrants') as $assignedGame) {
                                         if ($game->getId() === $assignedGame->getGameId()) {
                                             echo 'selected="selected"';
                                             break;
@@ -37,12 +49,12 @@
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                        <?php if ($this->get('profileField')->getShow() == 0): ?>
+                        <?php if ($profileField->getShow() == 0) : ?>
                             <span class="input-group-text" data-bs-toggle="tooltip" data-placement="bottom" title="<?=$this->getTrans('profileFieldHidden') ?>">
                                 <span class="fa-regular fa-eye-slash"></span>
                             </span>
                             </div>
-                    <?php endif; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 

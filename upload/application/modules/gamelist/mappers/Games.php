@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -16,7 +17,7 @@ class Games extends \Ilch\Mapper
      * @param array $where
      * @return GamesModel[]|array
      */
-    public function getEntries($where = [])
+    public function getEntries(array $where = []): array
     {
         $array = $this->db()->select('*')
             ->from('gamelist')
@@ -47,10 +48,10 @@ class Games extends \Ilch\Mapper
     /**
      * Gets entry by given id.
      *
-     * @param integer $id
+     * @param int $id
      * @return GamesModel|null
      */
-    public function getEntryById($id)
+    public function getEntryById(int $id): ?GamesModel
     {
         $row = $this->db()->select('*')
             ->from('gamelist')
@@ -103,9 +104,9 @@ class Games extends \Ilch\Mapper
     /**
      * Updates entry with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function update($id)
+    public function update(int $id)
     {
         $show = (int) $this->db()->select('show')
             ->from('gamelist')
@@ -129,9 +130,9 @@ class Games extends \Ilch\Mapper
     /**
      * Deletes entry with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function delete($id)
+    public function delete(int $id)
     {
         $this->db()->delete('gamelist')
             ->where(['id' => $id])

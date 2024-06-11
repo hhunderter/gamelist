@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,49 +14,49 @@ class Games extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The catid.
      *
      * @var int
      */
-    protected $catid;
+    protected $catid = 0;
 
     /**
      * The title.
      *
      * @var string
      */
-    protected $title;
+    protected $title = '';
 
     /**
      * The Videourl.
      *
      * @var string
      */
-    protected $videourl;
+    protected $videourl = '';
 
     /**
      * The image.
      *
      * @var string
      */
-    protected $image;
+    protected $image = '';
 
     /**
      * The show status.
      *
-     * @var int
+     * @var bool
      */
-    protected $show;
+    protected $show = true;
 
     /**
      * Gets the id.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -66,9 +67,9 @@ class Games extends \Ilch\Model
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Games
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -78,7 +79,7 @@ class Games extends \Ilch\Model
      *
      * @return int
      */
-    public function getCatId()
+    public function getCatId(): int
     {
         return $this->catid;
     }
@@ -89,9 +90,9 @@ class Games extends \Ilch\Model
      * @param int $catid
      * @return $this
      */
-    public function setCatId($catid)
+    public function setCatId(int $catid): Games
     {
-        $this->catid = (int)$catid;
+        $this->catid = $catid;
 
         return $this;
     }
@@ -101,7 +102,7 @@ class Games extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -112,9 +113,9 @@ class Games extends \Ilch\Model
      * @param string $title
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(string $title): Games
     {
-        $this->title = (string)$title;
+        $this->title = $title;
 
         return $this;
     }
@@ -124,7 +125,7 @@ class Games extends \Ilch\Model
      *
      * @return string
      */
-    public function getImage()
+    public function getImage(): string
     {
         return $this->image;
     }
@@ -135,7 +136,7 @@ class Games extends \Ilch\Model
      * @param string $image
      * @return $this
      */
-    public function setImage($image)
+    public function setImage(string $image): Games
     {
         $this->image = $image;
 
@@ -145,9 +146,9 @@ class Games extends \Ilch\Model
     /**
      * Gets the show status.
      *
-     * @return int
+     * @return bool
      */
-    public function getShow()
+    public function getShow(): bool
     {
         return $this->show;
     }
@@ -155,12 +156,12 @@ class Games extends \Ilch\Model
     /**
      * Sets the typ status.
      *
-     * @param int $show
+     * @param bool $show
      * @return $this
      */
-    public function setShow($show)
+    public function setShow(bool $show): Games
     {
-        $this->show = (int)$show;
+        $this->show = $show;
 
         return $this;
     }
@@ -170,7 +171,7 @@ class Games extends \Ilch\Model
      *
      * @return string
      */
-    public function getVideourl()
+    public function getVideourl(): string
     {
         return $this->videourl;
     }
@@ -181,9 +182,9 @@ class Games extends \Ilch\Model
      * @param string $videourl
      * @return $this
      */
-    public function setVideourl($videourl)
+    public function setVideourl(string $videourl): Games
     {
-        $this->videourl = (string)$videourl;
+        $this->videourl = $videourl;
 
         return $this;
     }

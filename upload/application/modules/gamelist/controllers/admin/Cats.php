@@ -1,11 +1,13 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Gamelist\Controllers\Admin;
 
+use Ilch\Validation;
 use Modules\Gamelist\Mappers\Category as CategoryMapper;
 use Modules\Gamelist\Models\Category as CategoryModel;
 use Modules\Gamelist\Mappers\Games as GamesMapper;
@@ -41,21 +43,20 @@ class Cats extends \Ilch\Controller\Admin
             $items[1]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuCats',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
         $categoryMapper = new CategoryMapper();
         $gamesMapper = new GamesMapper();
-        
+
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuGames'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuGames'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') === 'delete') {
             foreach ($this->getRequest()->getPost('check_cats') as $catId) {
@@ -70,43 +71,52 @@ class Cats extends \Ilch\Controller\Admin
         $this->getView()->set('cats', $categoryMapper->getCategories());
     }
 
-    public function treatAction() 
+    public function treatAction()
     {
         $categoryMapper = new CategoryMapper();
 
+        $model = new CategoryModel();
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuGames'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
-        
-            $this->getView()->set('cat', $categoryMapper->getCategoryById($this->getRequest()->getParam('id')));
+                ->add($this->getTranslator()->trans('menuGames'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
+
+            $model = $categoryMapper->getCategoryById($this->getRequest()->getParam('id'));
+
+            if (!$model) {
+                $this->redirect()
+                    ->withMessage('notfound', 'danger')
+                    ->to(['action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuGames'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('menuGames'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
+        $this->getView()->set('cat', $model);
 
         if ($this->getRequest()->isPost()) {
-            $model = new CategoryModel();
+            $post['title'] = trim($this->getRequest()->getPost('title'));
 
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
-            }
+            $validation = Validation::create($post, [
+                'title'  => 'required',
+            ]);
 
-            $title = trim($this->getRequest()->getPost('title'));
-
-            if (empty($title)) {
-                $this->addMessage('missingTitle', 'danger');
-            } else {
-                $model->setTitle($title);
+            if ($validation->isValid()) {
+                $model->setTitle($post['title']);
                 $categoryMapper->save($model);
 
                 $this->addMessage('saveSuccess');
 
                 $this->redirect(['action' => 'index']);
             }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(array_merge(['action' => 'treat'], $model->getId() ? ['id' => $model->getId()] : []));
         }
     }
 
@@ -123,7 +133,7 @@ class Cats extends \Ilch\Controller\Admin
                 $this->addMessage('deleteSuccess');
             }
         } else {
-            $this->addMessage('deleteFailed', 'danger'); 
+            $this->addMessage('deleteFailed', 'danger');
         }
 
         $this->redirect(['action' => 'index']);

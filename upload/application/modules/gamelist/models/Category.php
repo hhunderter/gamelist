@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,42 +14,42 @@ class Category extends \Ilch\Mapper
      *
      * @var int
      */
-    private $id;
+    private $id = 0;
 
     /**
      * The parentId of the category.
      *
      * @var int
      */
-    private $parentId;
+    private $parentId = 0;
 
     /**
      * The parentId of the category.
      *
      * @var int
      */
-    private $childId;
+    private $childId = 0;
 
     /**
      * The title of the category.
      *
      * @var string
      */
-    private $title;
+    private $title = '';
 
     /**
      * The text of the category.
      *
      * @var string
      */
-    private $text;
+    private $text = '';
 
     /**
      * Gets the category id.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -57,10 +58,13 @@ class Category extends \Ilch\Mapper
      * Sets the id of the category.
      *
      * @param int $id
+     * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Category
     {
-        $this->id = (int)$id;
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -68,7 +72,7 @@ class Category extends \Ilch\Mapper
      *
      * @return int
      */
-    public function getParentId()
+    public function getParentId(): int
     {
         return $this->parentId;
     }
@@ -76,11 +80,14 @@ class Category extends \Ilch\Mapper
     /**
      * Sets the parentId of the category.
      *
-     * @param int $childId
+     * @param int $parentId
+     * @return $this
      */
-    public function setParentId($parentId)
+    public function setParentId(int $parentId): Category
     {
-        $this->parentId = (int)$parentId;
+        $this->parentId = $parentId;
+
+        return $this;
     }
 
     /**
@@ -88,7 +95,7 @@ class Category extends \Ilch\Mapper
      *
      * @return int
      */
-    public function getChildId()
+    public function getChildId(): int
     {
         return $this->childId;
     }
@@ -96,11 +103,14 @@ class Category extends \Ilch\Mapper
     /**
      * Sets the parentId of the category.
      *
-     * @param int $id
+     * @param int $childId
+     * @return $this
      */
-    public function setChildId($childId)
+    public function setChildId(int $childId): Category
     {
-        $this->childId = (int)$childId;
+        $this->childId = $childId;
+
+        return $this;
     }
 
     /**
@@ -108,7 +118,7 @@ class Category extends \Ilch\Mapper
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -117,10 +127,13 @@ class Category extends \Ilch\Mapper
      * Sets the title of the category.
      *
      * @param string $title
+     * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(string $title): Category
     {
-        $this->title = (string)$title;
+        $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -128,7 +141,7 @@ class Category extends \Ilch\Mapper
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -137,11 +150,11 @@ class Category extends \Ilch\Mapper
      * Sets the text of the category.
      *
      * @param string $text
-     * @return this
+     * @return $this
      */
-    public function setText($text)
+    public function setText(string $text): Category
     {
-        $this->text = (string)$text;
+        $this->text = $text;
 
         return $this;
     }

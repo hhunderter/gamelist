@@ -26,7 +26,7 @@ $userMapper = $this->get('userMapper');
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <?php foreach ($categories as $category) :
-                        $countGames = count($gameMapper->getEntries(['catid' => $category->getId()]));
+                        $countGames = count($gameMapper->getEntries(['catid' => $category->getId(), 'show' => 1]));
                         if ($category->getId() == $this->getRequest()->getParam('catid') or $category->getId() == $this->get('firstCatId')) {
                             $active = 'active';
                         } else {

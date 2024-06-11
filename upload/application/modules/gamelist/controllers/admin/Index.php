@@ -106,9 +106,10 @@ class Index extends \Ilch\Controller\Admin
 
             $post = [
                 'catid' => $this->getRequest()->getPost('catid'),
-                'title' => $this->getRequest()->getPost('title'),
+                'title' => trim($this->getRequest()->getPost('title')),
                 'videourl' => $this->getRequest()->getPost('videourl'),
-                'image' => $image
+                'image' => $image,
+                'show' => $this->getRequest()->getPost('show')
             ];
 
             $newvideoUrl = str_replace("https://www.youtube.com/watch?v=", "", $post['videourl']);
@@ -116,19 +117,18 @@ class Index extends \Ilch\Controller\Admin
             $validation = Validation::create($post, [
                 'title'  => 'required',
                 'image' => 'required|url',
-                'catid' => 'required|numeric|exists:gamelist_cats,id'
+                'catid' => 'required|numeric|exists:gamelist_cats,id',
+                'show'   => 'required|numeric|min:0|max:1',
             ]);
 
             $post['image'] = trim($this->getRequest()->getPost('image'));
 
             if ($validation->isValid()) {
-                if (!$model->getId()) {
-                    $model->setShow(true);
-                }
                 $model->setTitle($post['title'])
                     ->setCatId($post['catid'])
                     ->setVideourl($newvideoUrl)
-                    ->setImage($post['image']);
+                    ->setImage($post['image'])
+                    ->setShow($post['show']);
                 $gamesMapper->save($model);
 
                 $this->redirect()

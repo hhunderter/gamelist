@@ -37,7 +37,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuGames'), ['action' => 'index'])
                 ->add($category->getTitle(), ['action' => 'index', 'catid' => $category->getId()]);
-            $games = $gamesMapper->getEntries(['catid' => $this->getRequest()->getParam('catid')]);
+            $games = $gamesMapper->getEntries(['catid' => $this->getRequest()->getParam('catid'), 'show' => 1]);
         } else {
             $catId = $categoryMapper->getCategoryMinId();
             if ($catId != '') {
@@ -45,11 +45,11 @@ class Index extends \Ilch\Controller\Frontend
                 $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuGames'), ['action' => 'index'])
                     ->add($category->getTitle(), ['action' => 'index', 'catid' => $category->getId()]);
-                $games = $gamesMapper->getEntries(['catid' => $catId->getId()]);
+                $games = $gamesMapper->getEntries(['catid' => $catId->getId(), 'show' => 1]);
                 $this->getView()->set('firstCatId', $catId->getId());
             } else {
                 $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuGames'), ['action' => 'index']);
-                $games = $gamesMapper->getEntries();
+                $games = $gamesMapper->getEntries(['show' => 1]);
             }
         }
 

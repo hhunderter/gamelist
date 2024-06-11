@@ -79,6 +79,21 @@ $cats = $this->get('cats');
                 </div>
             </div>
         </div>
+
+        <div class="row mb-3 <?=$this->validation()->hasError('show') ? 'has-error' : '' ?>">
+            <div class="col-xl-2 col-form-label">
+                <?=$this->getTrans('show') ?>
+            </div>
+            <div class="col-xl-4">
+                <div class="flipswitch">
+                    <input type="radio" class="flipswitch-input" id="show-yes" name="show" value="1" <?=($this->originalInput('show', ($entry->getShow()))) ? 'checked="checked"' : '' ?> />
+                    <label for="show-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                    <input type="radio" class="flipswitch-input" id="show-no" name="show" value="0"  <?=(!$this->originalInput('show', ($entry->getShow()))) ? 'checked="checked"' : '' ?> />
+                    <label for="show-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                    <span class="flipswitch-selection"></span>
+                </div>
+            </div>
+        </div>
         <?=$this->getSaveBar($entry->getId() ? 'updateButton' : 'addButton') ?>
     </form>
 <?php else : ?>

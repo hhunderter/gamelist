@@ -47,9 +47,9 @@ class Games extends \Ilch\Model
     /**
      * The show status.
      *
-     * @var int
+     * @var bool
      */
-    protected $show = 0;
+    protected $show = true;
 
     /**
      * Gets the id.
@@ -146,9 +146,9 @@ class Games extends \Ilch\Model
     /**
      * Gets the show status.
      *
-     * @return int
+     * @return bool
      */
-    public function getShow(): int
+    public function getShow(): bool
     {
         return $this->show;
     }
@@ -156,10 +156,10 @@ class Games extends \Ilch\Model
     /**
      * Sets the typ status.
      *
-     * @param int $show
+     * @param bool $show
      * @return $this
      */
-    public function setShow(int $show): Games
+    public function setShow(bool $show): Games
     {
         $this->show = $show;
 

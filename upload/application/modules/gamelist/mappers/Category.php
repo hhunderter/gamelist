@@ -65,6 +65,7 @@ class Category extends \Ilch\Mapper
             ->from(['c' => 'gamelist_cats'])
             ->join(['f' => 'gamelist'], 'c.id = f.catid')
             ->order(['c.id' => 'ASC'])
+            ->where(['f.show' => 1])
             ->limit('1')
             ->execute()
             ->fetchAssoc();

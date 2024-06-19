@@ -32,4 +32,7 @@ return [
     'dialog' => 'Nachrichten',
     'gallery' => 'Galerie',
     'settingsSettings' => 'Einstellungen',
+
+    'show' => 'Anzeigen',
+    'notfound' => 'Eintrag nicht gefunden',
 ];

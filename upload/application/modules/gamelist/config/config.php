@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'gamelist',
-        'version' => '1.5.0',
+        'version' => '1.5.1',
         'icon_small' => 'fa-solid fa-gamepad',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -118,6 +118,8 @@ class Config extends \Ilch\Config\Install
                 // no break
             case "1.4.0":
                 $this->db()->update('modules', ['icon_small' => $this->config['icon_small']], ['key' => $this->config['key']])->execute();
+                // no break
+            case "1.5.0":
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

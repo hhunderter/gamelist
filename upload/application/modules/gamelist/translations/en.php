@@ -32,4 +32,7 @@ return [
     'dialog' => 'Messages',
     'gallery' => 'Gallery',
     'settingsSettings' => 'Settings',
+
+    'show' => 'Show',
+    'notfound' => 'Entry not found',
 ];

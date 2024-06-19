@@ -16,36 +16,32 @@ $userMapper = $this->get('userMapper');
 ?>
 <h1><?=$this->getTrans('menuGames') ?></h1>
 <?php if (!empty($games)) : ?>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 border rounded">
-        <div class="container-fluid">
-              <a class="navbar-brand"><?=$this->getTrans('navigation') ?></a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="<?=$this->getTrans('tooglenavigation') ?>">
-                <span class="navbar-toggler-icon"></span>
-              </button>
+    <div class="mb-3 border rounded">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link" href="#"><?=$this->getTrans('navigation') ?></a>
+          </li>
+          <?php foreach ($categories as $category) :
+            $countGames = count($gameMapper->getEntries(['catid' => $category->getId(), 'show' => 1]));
+            if ($category->getId() == $this->getRequest()->getParam('catid') or $category->getId() == $this->get('firstCatId')) {
+                $active = 'active';
+            } else {
+                $active = '';
+            }
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <?php foreach ($categories as $category) :
-                        $countGames = count($gameMapper->getEntries(['catid' => $category->getId(), 'show' => 1]));
-                        if ($category->getId() == $this->getRequest()->getParam('catid') or $category->getId() == $this->get('firstCatId')) {
-                            $active = 'active';
-                        } else {
-                            $active = '';
-                        }
+                if ($countGames > 0) : ?>
+          <li class="nav-item">
+            <a class="nav-link <?=$active ?>" aria-current="page" href="<?=$this->getUrl('gamelist/index/index/catid/' . $category->getId()) ?>">
+                <b><?=$this->escape($category->getTitle()) ?></b>
+                <span class="badge rounded-pill bg-secondary"><?=$countGames ?></span>
+            </a>
+          </li>
 
-                        if ($countGames > 0) : ?>
-                            <li class="nav-item">
-                                <a class="nav-link <?=$active ?>" href="<?=$this->getUrl('gamelist/index/index/catid/' . $category->getId()) ?>">
-                                    <b><?=$this->escape($category->getTitle()) ?></b>
-                                    <span class="badge rounded-pill bg-secondary"><?=$countGames ?></span>
-                                </a>
-                            </li>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        </div>
-    </nav>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        </ul>
+    </div>
+
     <div class="gamelist">
         <?php foreach ($games as $game) : ?>
             <?php $entrantsUsers = $entrantsMapper->getEntrantsByGameId($game->getId()); ?>

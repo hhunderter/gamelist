@@ -21,14 +21,13 @@ $userMapper = $this->get('userMapper');
           <li class="nav-item">
             <a class="nav-link" href="#"><?=$this->getTrans('navigation') ?></a>
           </li>
-          <?php
-            foreach ($categories as $category) :
-                $countGames = count($gameMapper->getEntries(['catid' => $category->getId(), 'show' => 1]));
-                if ($category->getId() == $this->getRequest()->getParam('catid') or $category->getId() == $this->get('firstCatId')) {
-                    $active = 'active';
-                } else {
-                    $active = '';
-                }
+          <?php foreach ($categories as $category) :
+            $countGames = count($gameMapper->getEntries(['catid' => $category->getId(), 'show' => 1]));
+            if ($category->getId() == $this->getRequest()->getParam('catid') or $category->getId() == $this->get('firstCatId')) {
+                $active = 'active';
+            } else {
+                $active = '';
+            }
 
                 if ($countGames > 0) : ?>
           <li class="nav-item">
@@ -38,8 +37,8 @@ $userMapper = $this->get('userMapper');
             </a>
           </li>
 
-                <?php endif; ?>
-            <?php endforeach; ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
         </ul>
     </div>
 

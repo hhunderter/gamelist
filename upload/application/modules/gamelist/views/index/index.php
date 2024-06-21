@@ -16,12 +16,12 @@ $userMapper = $this->get('userMapper');
 ?>
 <h1><?=$this->getTrans('menuGames') ?></h1>
 <?php if (!empty($games)) : ?>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 border rounded">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary mb-3 border rounded">
         <div class="container-fluid">
-              <a class="navbar-brand"><?=$this->getTrans('navigation') ?></a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="<?=$this->getTrans('tooglenavigation') ?>">
+            <a class="navbar-brand"><?=$this->getTrans('navigation') ?></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="<?=$this->getTrans('tooglenavigation') ?>">
                 <span class="navbar-toggler-icon"></span>
-              </button>
+            </button>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
@@ -46,6 +46,7 @@ $userMapper = $this->get('userMapper');
             </div>
         </div>
     </nav>
+
     <div class="gamelist">
         <?php foreach ($games as $game) : ?>
             <?php $entrantsUsers = $entrantsMapper->getEntrantsByGameId($game->getId()); ?>
@@ -94,6 +95,11 @@ $userMapper = $this->get('userMapper');
                                     <?php foreach ($entrantsUsers as $user) : ?>
                                         <div class="entrants-user">
                                             <?php $entrantsUser = $userMapper->getUserById($user->getUserId()); ?>
+                                            <?php
+                                            if (!$entrantsUser) {
+                                                $entrantsUser = $userMapper->getDummyUser();
+                                            }
+                                            ?>
                                             <a href="<?=$this->getUrl('user/profil/index/user/' . $entrantsUser->getId()) ?>" class="entrants-user-link">
                                                 <img class="thumbnail" src="<?=$this->getStaticUrl() . '../' . $this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>" alt="">
                                                 <?=$this->escape($entrantsUser->getName()) ?>

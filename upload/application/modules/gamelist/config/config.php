@@ -25,7 +25,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage the game list.',
             ],
         ],
-        'ilchCore' => '2.2.0',
+        'ilchCore' => '2.2.4',
         'phpVersion' => '7.3'
     ];
 

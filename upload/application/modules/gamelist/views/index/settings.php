@@ -8,8 +8,8 @@ $entries = $this->get('entries');
 /** @var Modules\User\Models\ProfileField $profileField */
 $profileField = $this->get('profileField');
 ?>
-<link href="<?=$this->getStaticUrl('css/chosen/bootstrap-chosen.css') ?>" rel="stylesheet">
-<link href="<?=$this->getVendorUrl('harvesthq/chosen/chosen.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('css/bootstrap-choices.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('js/choices/build/choices.min.css') ?>" rel="stylesheet">
 <link href="<?=$this->getModuleUrl('../user/static/css/user.css') ?>" rel="stylesheet">
 
 <div class="row">
@@ -30,7 +30,7 @@ $profileField = $this->get('profileField');
                         <?php if ($profileField->getShow() == 0) : ?>
                             <div class="input-group">
                         <?php endif; ?>
-                        <select class="chosen-select form-control"
+                        <select class="choices-select form-control"
                                 id="assignedGames"
                                 name="games[]"
                                 data-placeholder="<?=$this->getTrans('selectGames') ?>"
@@ -74,8 +74,31 @@ $profileField = $this->get('profileField');
     </div>
 </div>
 
-<script src="<?=$this->getVendorUrl('harvesthq/chosen/chosen.jquery.min.js') ?>"></script>
+<script src="<?=$this->getStaticUrl('js/choices/build/choices.min.js') ?>"></script>
 <script>
-    $('#assignedGames').chosen();
+    $(document).ready(function() {
+        new Choices('#assignedGames', {
+            removeItemButton: true,
+            searchEnabled: true,
+            shouldSort: false,
+            loadingText: '<?=$this->getTranslator()->trans('choicesLoadingText') ?>',
+            noResultsText: '<?=$this->getTranslator()->trans('choicesNoResultsText') ?>',
+            noChoicesText: '<?=$this->getTranslator()->trans('choicesNoChoicesText') ?>',
+            itemSelectText: '<?=$this->getTranslator()->trans('choicesItemSelectText') ?>',
+            uniqueItemText: '<?=$this->getTranslator()->trans('choicesUniqueItemText') ?>',
+            customAddItemText: '<?=$this->getTranslator()->trans('choicesCustomAddItemText') ?>',
+            addItemText: (value) => {
+                return '<?=$this->getTranslator()->trans('choicesAddItemText') ?>'.replace(/\${value}/g, value);
+            },
+            removeItemIconText: '<?=$this->getTranslator()->trans('choicesRemoveItemIconText') ?>',
+            removeItemLabelText: (value) => {
+                return '<?=$this->getTranslator()->trans('choicesRemoveItemLabelText') ?>'.replace(/\${value}/g, value);
+            },
+            maxItemCount: (maxItemCount) => {
+                return '<?=$this->getTranslator()->trans('choicesMaxItemText') ?>'.replace(/\${maxItemCount}/g, maxItemCount);
+            },
+        });
+    });
+
     $('[data-toggle="tooltip"]').tooltip()
 </script>
